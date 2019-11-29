@@ -15,9 +15,16 @@ buildscript {
     }
 }
 
+def getDate(){
+	def date = new Date()
+	def formattedDate = date.format('HHmmss_ddMMyyyy')
+	return formattedDate
+}
+
+
 allprojects {
 
-    version = '1.0'
+    version = "sprint.1-build-"+getDate()
     ext {
         appName = "ez-maze"
         gdxVersion = '1.9.10'
@@ -43,6 +50,7 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
+		implementation files("libs/runnable-texturepacker.jar")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"

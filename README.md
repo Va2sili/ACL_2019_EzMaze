@@ -11,7 +11,7 @@ Pour ce faire :
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
 ## Etat du Backlog du Sprint 1
- - [x] Affichage du joueur et déplacmeent sur le plateau
+ - [x] Affichage du joueur et déplacement sur le plateau
  
  - [x] Impossibilité de traverser les murs
  

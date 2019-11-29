@@ -1,8 +1,0 @@
-Cec::::: un test - Par adrien
-<<<<<<< HEAD
-ON MET CA DANS LA BRANCHE 2
-=======
-Carl est un GROS boulet
-
->>>>>>> 9570c7ec28351957f47c019882628ab71de64abb
-

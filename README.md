@@ -11,7 +11,10 @@ Pour ce faire :
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
 ## Etat du Backlog du Sprint 1
- [x] Affichage du joueur et déplacmeent sur le plateau
- [x] Impossibilité de traverser les murs
- [] Case de trésor pour gagner et finir le jeu
- [] Apparition de monstres qui se déplacent et font perdre le joueur
+ -[x] Affichage du joueur et déplacmeent sur le plateau
+ 
+ -[x] Impossibilité de traverser les murs
+ 
+ -[] Case de trésor pour gagner et finir le jeu
+ 
+ -[] Apparition de monstres qui se déplacent et font perdre le joueur

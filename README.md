@@ -18,3 +18,6 @@ Pour ce faire :
  - [ ] Case de trésor pour gagner et finir le jeu
  
  - [ ] Apparition de monstres qui se déplacent et font perdre le joueur
+
+## Informations Supplémentaires
+On peut retrouver le dépôt GIT concernant les images utilisées dans le WIKI à l'adresse : https://github.com/Sutcenes/EzMazeWikiSource

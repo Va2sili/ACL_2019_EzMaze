@@ -1,5 +1,5 @@
 # EzMaze
-![Banniere](https://github.com/Va2sili/ACL_2019_EzMaze/blob/master/Images_WIKI/banniere.png)
+![Banniere](https://github.com/Sutcenes/EzMazeWikiSource/blob/master/Images_WIKI/banniere.png)
 ## Comment réaliser le build
 Le dossier qui nous intéresse est le dossier nommé _Ez\_Maze\_Git_. Il contient l'intégralité des fichiers utiles au projet. On pourra lancer le build automatique utilisant Gradle ([cf. le wiki EzMaze](https://github.com/Va2sili/ACL_2019_EzMaze/wiki/GRADLE#libgdx---outils-de-build)).
 Pour ce faire :

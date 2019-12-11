@@ -1,33 +1,26 @@
 
 ezmaze.pack.png
-size: 1024,1024
+size: 256,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Mur
   rotate: false
-  xy: 846, 945
+  xy: 2, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-monstre
-  rotate: false
-  xy: 2, 2
-  size: 842, 1003
-  orig: 842, 1003
-  offset: 0, 0
-  index: -1
 personnage
   rotate: false
-  xy: 908, 954
+  xy: 126, 11
   size: 21, 51
   orig: 21, 51
   offset: 0, 0
   index: -1
 victoire
   rotate: false
-  xy: 846, 883
+  xy: 64, 2
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

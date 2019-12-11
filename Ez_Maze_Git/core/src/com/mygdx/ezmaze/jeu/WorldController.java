@@ -266,7 +266,7 @@ public class WorldController extends InputAdapter {
 		r3.set(level.monstre.position.x+0.2f,level.monstre.position.y+0.2f,level.monstre.frontiere.width-0.4f,level.monstre.frontiere.height-0.4f);
 
 
-		//test pour les collisions personnage <--> mur
+		//test pour les collisions personnage <--> mur && monstre <--> mur
 		for (Mur mur : level.murs) {
 			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
 			if(!r1.overlaps(r2) && !r3.overlaps(r2)) continue;
@@ -303,112 +303,5 @@ public class WorldController extends InputAdapter {
 		return false;
 	}
 
-
-
-
-
-
-	//**************** TESTS - CODE POUBELLE ****************
-	//	private void initTestObjets() {
-	//		//On commence par créer un tableau de 5 Sprites
-	//		testSprites = new Sprite[5];
-	//		
-	////UNE POSSIBILITE - GENERATION ALEATOIRE
-	////		//On crée une Pixmap vide et POT-sized avec des pixels d'information de 8bit RGBA
-	////		int width = 32;
-	////		int height = 32;
-	////		Pixmap pixmap = createProceduralPixmap(width,height);
-	////		//Crée une nouvelle texture d'information pixmap
-	////		//On pourra par le suite importer des textures, mais pour l'instant on
-	////		//Les fabrique avec une pixmap !
-	////		Texture texture = new Texture(pixmap);
-	////		for (int i = 0; i < testSprites.length; i++) {
-	////			Sprite sprite = new Sprite(texture);
-	////			//On défini un sprite comme étant un élément de taille 1x1 dans le monde du jeu
-	////			sprite.setSize(1, 1);
-	////			//On place l'origine au niveau du centre du sprite (!on met des floats)
-	////			//Ceci sera particulièrement utile pour les ROTATIONS !
-	////			sprite.setOrigin(sprite.getWidth()/2.0f, sprite.getHeight()/2.0f);
-	////			//On calcule une position pour le sprite, au hasard pour l'instant
-	////			float randposX = MathUtils.random(-2.0f,2.0f);
-	////			float randposY = MathUtils.random(-2.0f,2.0f);
-	////			sprite.setPosition(randposX, randposY);
-	////			//On place le sprite nouvellement créé dans le tabelau de sprites
-	////			testSprites[i]=sprite;
-	////FIN DE LA POSSIBILITE - GENERATION ALEATOIRE
-	//		
-	//			
-	////UNE POSSIBILITE - UTILISATION D'UN ATLAS ET DES REGIONS
-	//		//On crée une liste des régions de texture
-	//		Array<TextureRegion> regions = new Array<TextureRegion>();
-	//		regions.add(Assets.instance.thesee.personnage);
-	//		regions.add(Assets.instance.mur.mur);
-	//		regions.add(Assets.instance.carre.EZCase);
-	//		//Création des nouveaux sprites qui utilisent un partie random de la region
-	//		//On crée de nouveaux sprites en utilisant la texture créée ci-dessus
-	//		for (int i = 0; i < testSprites.length; i++) {
-	//			TextureRegion TR = regions.random();
-	//			System.out.println(TR);
-	//			Sprite sprite = new Sprite(TR);
-	//			//On défini un sprite comme étant un élément de taille 1x1 dans le monde du jeu
-	//			sprite.setSize(1, 1);
-	//			//On place l'origine au niveau du centre du sprite (!on met des floats)
-	//			//Ceci sera particulièrement utile pour les ROTATIONS !
-	//			sprite.setOrigin(sprite.getWidth()/2.0f, sprite.getHeight()/2.0f);
-	//			//On calcule une position pour le sprite, au hasard pour l'instant
-	//			float randposX = MathUtils.random(-2.0f,2.0f);
-	//			float randposY = MathUtils.random(-2.0f,2.0f);
-	//			sprite.setPosition(randposX, randposY);
-	//			//On place le sprite nouvellement créé dans le tabelau de sprites
-	//			testSprites[i]=sprite;
-	//		}
-	////FIN DE LA POSSIBILITE - UTILISATION D'UN ATLAS ET DES REGIONS
-	//		
-	//		
-	//		//On prend le premier sprite comme étant celui sélectionné
-	//		selectedSprite = 0;
-	//	}
-	//	
-	//	private Pixmap createProceduralPixmap(int width, int height) {
-	//		// TODO Auto-generated method stub
-	//		Pixmap pixmap = new Pixmap(width,height,Format.RGBA8888);
-	//		//On remplit le carré d'une couleur rouge d'opacité 0.5
-	//		pixmap.setColor(1,0,0,0.5f);//rouge
-	//		pixmap.fill();
-	//		//On dessine une forme en X colorée de jaune et vert sur le carré
-	//		pixmap.setColor(1,1,0,1);//jaune
-	//		pixmap.drawLine(0, 0, width, height);//Une droite \
-	//		pixmap.setColor(0,1,0,1);//vert
-	//		pixmap.drawLine(width, 0, 0, height);//Une autre droite /
-	//		//Et maintenant un cadre bleu autour du carré
-	//		pixmap.setColor(0,0,1,1);
-	//		pixmap.drawRectangle(0, 0, width, height);
-	//		return pixmap;
-	//	}
-
-	//	private void updateTestObjets(float deltaTime) {
-	//		// TODO Auto-generated method stub
-	//		// On récupère la rotation actuelle du sprite AUTOUR DE SON ORIGINE !
-	//		float rotation = testSprites[selectedSprite].getRotation();
-	//		//On fait tourner le sprite à pi/2 rad/s
-	//		rotation += 90 * deltaTime;
-	//		//On applique cette rotation au sprite
-	//		testSprites[selectedSprite].setRotation(rotation);
-	//	}
-	//	
-	//	/*
-	//	 * Ci-après, on gère les évènements de InputAdapter pour le relâchement de
-	//	 * certaines touches qui nous intéressent :
-	//	 * 'R' : pour reset
-	//	 * 'SPACE' : pour changer le sprite que l'on contrôle
-	//	 */
-	//	
-
-	//	private void moveSelectedSprite(float v_x, float v_y) {
-	//		// TODO Auto-generated method stub
-	//		testSprites[selectedSprite].translate(v_x, v_y);
-	//	}
-
-	//****************FIN DU CODE POUBELLE ****************
 
 }

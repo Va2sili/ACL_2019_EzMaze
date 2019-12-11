@@ -138,12 +138,7 @@ public class Monstre extends AbstractGameObject {
 		// TODO Auto-generated method stub
 		TextureRegion reg = null;
 
-		//On met une couleur rouge pour le personnage lorsque son attaque est chargée
-		if (attaque) {
-			batch.setColor(1f,0f,0f,1f);
-		}
-
-		//On dessine le personnage
+				//On dessine le personnage
 		reg = regMonstre;
 		//System.out.println(regMonstre==null);
 		//batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y);

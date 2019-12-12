@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.ezmaze.jeu.objects.AbstractGameObject;
+import com.mygdx.ezmaze.jeu.objects.Case;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
@@ -42,6 +43,7 @@ public class Level {
 	public Array<Mur> murs;
 	public PersonnagePrincipal personnage;
 	public Monstre monstre;
+        public Case c;
 
 	public Level(String filename) {
 		init(filename);
@@ -52,6 +54,7 @@ public class Level {
 		personnage = null;
 		//objets
 		murs =  new Array<Mur>();
+                c=null;
 		//monstres
 		monstre=null;
 
@@ -110,7 +113,11 @@ public class Level {
 					personnage = (PersonnagePrincipal) obj;
 				}
 				//Soit c'est la case de fin
-				else if (BLOCK_TYPE.CASE_ARRIVEE.sameColor(pixelObserve)) {}
+				else if (BLOCK_TYPE.CASE_ARRIVEE.sameColor(pixelObserve)) {
+				obj=new Case();
+					obj.position.set(pixelX, -pixelY);
+					c=(Case)obj;
+				}
 
 				//Soit c'est le spawn monstre
 				else if (BLOCK_TYPE.SPAWN_MONSTRE.sameColor(pixelObserve)) {
@@ -154,7 +161,8 @@ public class Level {
 		for (Mur mur : murs) {
 			mur.render(batch);
 		}
-
+		//on dessine la case d'arrivée
+		c.render(batch);
 		//Dessiner le personnage joueur
 
 		personnage.render(batch);
@@ -164,6 +172,7 @@ public class Level {
 	public void update(float deltaTime) {
 		personnage.update(deltaTime);
 		monstre.update(deltaTime);
+		c.update(deltaTime);
 		for (Mur mur : murs) {
 			mur.update(deltaTime);
 		}

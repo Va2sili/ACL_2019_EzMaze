@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.ezmaze.jeu.objects.Case;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
@@ -244,11 +245,15 @@ public class WorldController extends InputAdapter {
 		}
 	};
 
-	private void collisionPersonnageEzCase() {
-		/*
-		 * Non implémenté
-		 */
-	};
+	private void collisionPersonnageEzCase(Case ezcase) {
+			//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
+PersonnagePrincipal personnage = level.personnage;
+		float differenceH = personnage.position.x-(ezcase.position.x);
+		if (Math.abs(differenceH)<1.0f)  {
+			keyUp(Keys.R);
+		
+	}
+	}
 	private void collisionPersonnageMonstre() {
 		/*
 		 * Non implémenté
@@ -275,9 +280,11 @@ public class WorldController extends InputAdapter {
 		}
 
 		//Test pour les collisions personnage <--> EzCase
-		/*
-		 * Non implémenté
-		 */
+		//dès qu'il y a chevauchement on fait appelle a la fonction collisionpersonnageezcase
+		r2.set(level.c.position.x,level.c.position.y,level.c.frontiere.width,level.c.frontiere.height);
+		if(r1.overlaps(r2)) {
+		collisionPersonnageEzCase(level.c);}
+		
 
 		//Test pour les collisions personnage <--> Monstre
 		/*

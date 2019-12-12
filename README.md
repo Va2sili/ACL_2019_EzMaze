@@ -15,7 +15,7 @@ Pour ce faire :
  
  - [x] Impossibilité de traverser les murs
  
- - [ ] Case de trésor pour gagner et finir le jeu
+ - [x] Case de trésor pour gagner et finir le jeu
  
  - [ ] Apparition de monstres qui se déplacent et font perdre le joueur
 

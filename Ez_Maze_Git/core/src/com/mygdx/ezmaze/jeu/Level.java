@@ -43,7 +43,7 @@ public class Level {
 	public Array<Mur> murs;
 	public PersonnagePrincipal personnage;
 	public Monstre monstre;
-        public Case c;
+    public Case ezmaze;
 
 	public Level(String filename) {
 		init(filename);
@@ -54,7 +54,7 @@ public class Level {
 		personnage = null;
 		//objets
 		murs =  new Array<Mur>();
-                c=null;
+        ezmaze=null;
 		//monstres
 		monstre=null;
 
@@ -114,9 +114,9 @@ public class Level {
 				}
 				//Soit c'est la case de fin
 				else if (BLOCK_TYPE.CASE_ARRIVEE.sameColor(pixelObserve)) {
-				obj=new Case();
+					obj=new Case();
 					obj.position.set(pixelX, -pixelY);
-					c=(Case)obj;
+					ezmaze = (Case) obj;
 				}
 
 				//Soit c'est le spawn monstre
@@ -162,7 +162,7 @@ public class Level {
 			mur.render(batch);
 		}
 		//on dessine la case d'arrivée
-		c.render(batch);
+		ezmaze.render(batch);
 		//Dessiner le personnage joueur
 
 		personnage.render(batch);
@@ -172,7 +172,7 @@ public class Level {
 	public void update(float deltaTime) {
 		personnage.update(deltaTime);
 		monstre.update(deltaTime);
-		c.update(deltaTime);
+		ezmaze.update(deltaTime);
 		for (Mur mur : murs) {
 			mur.update(deltaTime);
 		}

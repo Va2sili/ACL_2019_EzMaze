@@ -222,6 +222,7 @@ public class WorldController extends InputAdapter {
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
 			personnage.position.x = personnage.anciennePosition.x;
 		}
+		System.out.println("HOP !");
 	};
 
 	private void collisionMonstreMur(Mur mur) {
@@ -247,7 +248,7 @@ public class WorldController extends InputAdapter {
 
 	private void collisionPersonnageEzCase(Case ezcase) {
 			//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
-PersonnagePrincipal personnage = level.personnage;
+		PersonnagePrincipal personnage = level.personnage;
 		float differenceH = personnage.position.x-(ezcase.position.x);
 		if (Math.abs(differenceH)<1.0f)  {
 			keyUp(Keys.R);
@@ -274,16 +275,16 @@ PersonnagePrincipal personnage = level.personnage;
 		//test pour les collisions personnage <--> mur && monstre <--> mur
 		for (Mur mur : level.murs) {
 			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-			if(!r1.overlaps(r2) && !r3.overlaps(r2)) continue;
+			if (!r1.overlaps(r2) && !r3.overlaps(r2)) continue;
 			collisionPersonnageMur(mur);
 			collisionMonstreMur(mur);
 		}
 
 		//Test pour les collisions personnage <--> EzCase
 		//dès qu'il y a chevauchement on fait appelle a la fonction collisionpersonnageezcase
-		r2.set(level.c.position.x,level.c.position.y,level.c.frontiere.width,level.c.frontiere.height);
+		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
-		collisionPersonnageEzCase(level.c);}
+		collisionPersonnageEzCase(level.ezmaze);}
 		
 
 		//Test pour les collisions personnage <--> Monstre

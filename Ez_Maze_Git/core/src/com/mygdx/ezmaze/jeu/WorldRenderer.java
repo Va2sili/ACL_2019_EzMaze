@@ -14,6 +14,8 @@ import ezmaze.util.Constantes;
 public class WorldRenderer implements Disposable {
 	//Camera préimplémentée dans LibGDX
 	private OrthographicCamera camera;
+	//Camera supplémentaire pour le GUI
+	private OrthographicCamera cameraGUI;
 	//SpriteBatch implémente l'interface "disposable" et c'est pourquoi on implémentera
 	//ici la fonction dispose() qui libérera de la mémoire au cours de l'exécution.
 	private SpriteBatch batch;
@@ -34,35 +36,33 @@ public class WorldRenderer implements Disposable {
 		camera = new OrthographicCamera(Constantes.VIEWPORT_WIDTH, Constantes.VIEWPORT_HEIGHT);
 		camera.position.set(0,0,0);
 		camera.update();
+		cameraGUI = new OrthographicCamera(Constantes.VIEWPORT_GUI_WIDTH,Constantes.VIEWPORT_GUI_HEIGHT);
+		cameraGUI.position.set(0,0,0);
+		cameraGUI.setToOrtho(true);//Inversion de l'axe vertical
+		cameraGUI.update();
 	}
 	
 	//Contiendra la logique d'affichage des objets du jeu (ordre d'affichage, layers, ...)
 	public void render() {
-		//CODE POUBELLE
-		//renderTestObjects();
-		//FIN CODE POUBELLE
-		
 		renderWorld(batch);
+		renderGui(batch);
 	};
 	
-//CODE POUBELLE	
-//	private void renderTestObjects() {
-//		// TODO Auto-generated method stub
-//		worldController.cameraHelper.applyTo(camera);
-//		batch.setProjectionMatrix(camera.combined);
-//		batch.begin();
-//		for (Sprite sprite : worldController.testSprites) {
-//			sprite.draw(batch);
-//		}
-//		batch.end();
-//	}
-//FIN CODE POUBELLE
+
 	
 	private void renderWorld (SpriteBatch batch) {
 		worldController.cameraHelper.applyTo(camera);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		worldController.level.render(batch);
+		batch.end();
+	}
+	
+	private void renderGui(SpriteBatch batch) {
+		batch.setProjectionMatrix(cameraGUI.combined);
+		batch.begin();
+		RenderGUI.renderGuiNbMonstres(batch);
+		RenderGUI.renderGuiTimeCounter(batch, cameraGUI);
 		batch.end();
 	}
 	

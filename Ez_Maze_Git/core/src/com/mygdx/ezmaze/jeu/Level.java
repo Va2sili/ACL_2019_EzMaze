@@ -124,6 +124,7 @@ public class Level {
 					obj = new Monstre();
 					obj.position.set(pixelX,-pixelY);
 					monstre=(Monstre)obj;
+					WorldController.NbMonstres++;
 				}
 
 				//Sinon c'est un objet inconnu

@@ -23,6 +23,8 @@ import ezmaze.util.Constantes;
 public class WorldController extends InputAdapter {
 	private static final String TAG = WorldController.class.getName();
 
+	public static int NbMonstres=0;
+
 	//TESTS
 	//public Sprite[] testSprites;
 	//public int selectedSprite;

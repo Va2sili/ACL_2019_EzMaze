@@ -23,6 +23,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetMur mur;
 	public AssetCase carre;//On ne peut pas utiliser le nom 'case'
 	public AssetMonstre monstre;
+	public AssetPoliceEcriture police;
 
 
 
@@ -55,6 +56,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		mur = new AssetMur(atlas);
 		carre = new AssetCase(atlas);
 		monstre =new AssetMonstre(atlas);
+		police = new AssetPoliceEcriture();
 	}
 
 	/*
@@ -94,6 +96,29 @@ public class Assets implements Disposable, AssetErrorListener {
 			monster = atlas.findRegion("monstre");
 		}
 	}
+	
+	public class AssetPoliceEcriture{
+		public final BitmapFont petit;
+		public final BitmapFont moyen;
+		public final BitmapFont gros;
+		
+		public AssetPoliceEcriture() {
+			//On va créer les polices dont on se servira dans le jeu
+			petit = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			moyen = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			gros = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			
+			//Pour chaque, reste à définir une taille d'affichage
+			petit.getData().setScale(0.75f);
+			moyen.getData().setScale(1.0f);
+			gros.getData().setScale(2.0f);
+			
+			//Et on applique un filtre anti pixelisation
+			petit.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			moyen.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			gros.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
+	}
 
 	/*
 	 * Fin de la définition des inner-classes
@@ -112,6 +137,9 @@ public class Assets implements Disposable, AssetErrorListener {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		assetManager.dispose();
+		police.petit.dispose();
+		police.moyen.dispose();
+		police.gros.dispose();
 	}
 
 }

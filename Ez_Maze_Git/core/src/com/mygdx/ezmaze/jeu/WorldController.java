@@ -282,8 +282,10 @@ public class WorldController extends InputAdapter {
 		//test pour les collisions personnage <--> mur && monstre <--> mur
 		for (Mur mur : level.murs) {
 			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-			if (!r1.overlaps(r2) && !r3.overlaps(r2)) continue;
+			if (r1.overlaps(r2)) {
 			collisionPersonnageMur(mur);
+			}
+			if (r3.overlaps(r2))
 			collisionMonstreMur(mur);
 		}
 

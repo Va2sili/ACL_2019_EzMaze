@@ -17,7 +17,8 @@ public class Constantes {
 	public static final String TEXTURE_ATLAS_OBJECTS = "../core/assets/images/ezmaze.pack.atlas";
 
 	//Emplacement du fichier image pour le level_01
-	public static final String LEVEL_01 = "../core/assets/levels/level_01.png";
+	private static String chemin = "../core/assets/levels/";
+	public static final String[] LEVEL = {chemin+"level_01.png",chemin+"level_02.png"};
 
 	//Mise en place d'un GUI
 	//Il est à la taille de la fenêtre

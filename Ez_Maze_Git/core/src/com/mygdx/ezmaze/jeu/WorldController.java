@@ -34,12 +34,14 @@ public class WorldController extends InputAdapter {
 	public CameraHelper cameraHelper;
 
 	public Level level;
+	public int numLevel=0;
 	public int resurections;
 	public int score;
 
 	private void initLevel() {
 		score = 0;
-		level = new Level(Constantes.LEVEL_01);
+		numLevel = numLevel%(Constantes.LEVEL.length);
+		level = new Level(Constantes.LEVEL[numLevel]);
 		cameraHelper.setTarget(level.personnage);
 	}
 
@@ -253,6 +255,7 @@ public class WorldController extends InputAdapter {
 		PersonnagePrincipal personnage = level.personnage;
 		float differenceH = personnage.position.x-(ezcase.position.x);
 		if (Math.abs(differenceH)<1.0f)  {
+			numLevel++;;
 			keyUp(Keys.R);
 		
 	}

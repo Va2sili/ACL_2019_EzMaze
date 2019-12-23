@@ -138,7 +138,7 @@ public class Monstre extends AbstractGameObject {
 		// TODO Auto-generated method stub
 		TextureRegion reg = null;
 
-				//On dessine le personnage
+		//On dessine le monstre
 		reg = regMonstre;
 		//System.out.println(regMonstre==null);
 		//batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y);

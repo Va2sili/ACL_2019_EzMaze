@@ -167,7 +167,7 @@ public class Level {
 		//Dessiner le personnage joueur
 
 		personnage.render(batch);
-		monstre.render(batch);
+
 	}
 
 	public void update(float deltaTime) {

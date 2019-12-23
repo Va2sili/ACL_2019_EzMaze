@@ -8,10 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ezmaze.util.Constantes;
 
 public class RenderGUI {
-	static float temps = 0;
-	
-	
-
 	public static void renderGuiNbMonstres(SpriteBatch batch) {
 		float x = -15;
 		float y = -15;
@@ -22,15 +18,15 @@ public class RenderGUI {
 	public static void renderGuiTimeCounter(SpriteBatch batch, OrthographicCamera cameraGUI) {
 		float x = cameraGUI.viewportWidth - 150;
 		float y = cameraGUI.viewportHeight - 55;
-		temps +=  Gdx.graphics.getDeltaTime();
+		WorldController.temps +=  Gdx.graphics.getDeltaTime();
 		BitmapFont timePolice = Assets.instance.police.moyen;
-		if (temps < 60) {
+		if (WorldController.temps < 60) {
 			timePolice.setColor(0,1,0,1);
 		}
 		else {
 			timePolice.setColor(1,0,0,1);
 		}
-		timePolice.draw(batch, "Temps : "+(int)temps, x, y);
+		timePolice.draw(batch, "Temps : "+(int)WorldController.temps, x, y);
 		timePolice.setColor(1,1,1,1);
 	}
 }

@@ -24,6 +24,7 @@ public class WorldController extends InputAdapter {
 	private static final String TAG = WorldController.class.getName();
 
 	public static int NbMonstres=0;
+	public static float temps = 0;
 
 	//TESTS
 	//public Sprite[] testSprites;
@@ -60,6 +61,7 @@ public class WorldController extends InputAdapter {
 		cameraHelper = new CameraHelper();
 		//initTestObjets(); //CODE POUBELLE
 		resurections = Constantes.RESU_INIT;
+		temps = 0;
 		initLevel();
 	}
 

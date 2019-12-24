@@ -61,7 +61,7 @@ public class WorldRenderer implements Disposable {
 	private void renderGui(SpriteBatch batch) {
 		batch.setProjectionMatrix(cameraGUI.combined);
 		batch.begin();
-		RenderGUI.renderGuiNbMonstres(batch);
+		RenderGUI.renderGuiNbMonstres(batch,worldController);
 		RenderGUI.renderGuiTimeCounter(batch, cameraGUI);
 		batch.end();
 	}

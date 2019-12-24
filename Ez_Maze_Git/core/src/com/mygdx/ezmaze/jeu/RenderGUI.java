@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ezmaze.util.Constantes;
 
 public class RenderGUI {
-	public static void renderGuiNbMonstres(SpriteBatch batch) {
+	public static void renderGuiNbMonstres(SpriteBatch batch, WorldController worldController) {
 		float x = -15;
 		float y = -15;
 		batch.draw(Assets.instance.monstre.monster, x, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
-		Assets.instance.police.gros.draw(batch, ""+WorldController.NbMonstres, x+75,y+37);
+		Assets.instance.police.gros.draw(batch, ""+worldController.getNbMonstres(), x+75,y+37);
 	}
 	
 	public static void renderGuiTimeCounter(SpriteBatch batch, OrthographicCamera cameraGUI) {

@@ -42,7 +42,7 @@ public class Level {
 	//objets (pour le moment il n'y a que des murs, un personnage et un monstre !
 	public Array<Mur> murs;
 	public PersonnagePrincipal personnage;
-	public Monstre monstre;
+	public Array<Monstre> monstres;
     public Case ezmaze;
 
 	public Level(String filename) {
@@ -56,7 +56,7 @@ public class Level {
 		murs =  new Array<Mur>();
         ezmaze=null;
 		//monstres
-		monstre=null;
+		monstres= new Array<Monstre>();
 
 		System.out.println(" Empty :"+BLOCK_TYPE.EMPTY.getColor()
 		+"\n PIERRE :"+BLOCK_TYPE.MUR_DE_PIERRE.getColor()
@@ -123,8 +123,8 @@ public class Level {
 				else if (BLOCK_TYPE.SPAWN_MONSTRE.sameColor(pixelObserve)) {
 					obj = new Monstre();
 					obj.position.set(pixelX,-pixelY);
-					monstre=(Monstre)obj;
-					WorldController.NbMonstres++;
+					monstres.add((Monstre)obj);
+					
 				}
 
 				//Sinon c'est un objet inconnu
@@ -167,13 +167,18 @@ public class Level {
 		//Dessiner le personnage joueur
 
 		personnage.render(batch);
+		for (Monstre m : monstres) {
+			m.render(batch);
+		}
 
 	}
 
 	public void update(float deltaTime) {
 		personnage.update(deltaTime);
-		monstre.update(deltaTime);
 		ezmaze.update(deltaTime);
+		for (Monstre m : monstres) {
+			m.update(deltaTime);
+		}
 		for (Mur mur : murs) {
 			mur.update(deltaTime);
 		}

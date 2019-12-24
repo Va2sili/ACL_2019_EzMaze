@@ -23,7 +23,7 @@ import ezmaze.util.Constantes;
 public class WorldController extends InputAdapter {
 	private static final String TAG = WorldController.class.getName();
 
-	public static int NbMonstres=0;
+	
 	public static float temps = 0;
 
 	//TESTS
@@ -231,12 +231,11 @@ public class WorldController extends InputAdapter {
 		System.out.println("HOP !");
 	};
 
-	private void collisionMonstreMur(Mur mur) {
+	private void collisionMonstreMur(Mur mur, Monstre m) {
 
-		Monstre monster = level.monstre;
 
-		float differenceVerticale = monster.position.y-(mur.position.y);
-		float differenceHorizontale = monster.position.x-(mur.position.x);
+		float differenceVerticale = m.position.y-(mur.position.y);
+		float differenceHorizontale = m.position.x-(mur.position.x);
 
 		//		System.out.println("	(x,X) = ("+personnage.position.x+","+mur.position.x+")"
 		//				+"	(y,Y) = ("+personnage.position.y+","+mur.position.y+")"
@@ -244,11 +243,11 @@ public class WorldController extends InputAdapter {
 		//				+"\n	Différence Horizontale = "+differenceHorizontale);
 
 		if (Math.abs(differenceVerticale) < 1.0f) {
-			monster.position.y = monster.anciennePosition.y;
+			m.position.y = m.anciennePosition.y;
 
 		}
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
-			monster.position.x = monster.anciennePosition.x;
+			m.position.x = m.anciennePosition.x;
 		}
 	};
 
@@ -276,7 +275,7 @@ public class WorldController extends InputAdapter {
 		 * De détecter une collision lorsque qu'on ne touche qu'à peine un élément du bout du doigt de pixels...
 		 */
 		r1.set(level.personnage.position.x+0.2f,level.personnage.position.y+0.2f,level.personnage.frontiere.width-0.4f,level.personnage.frontiere.height-0.4f);
-		r3.set(level.monstre.position.x+0.2f,level.monstre.position.y+0.2f,level.monstre.frontiere.width-0.4f,level.monstre.frontiere.height-0.4f);
+		
 
 
 		//test pour les collisions personnage <--> mur && monstre <--> mur
@@ -285,8 +284,11 @@ public class WorldController extends InputAdapter {
 			if (r1.overlaps(r2)) {
 			collisionPersonnageMur(mur);
 			}
-			if (r3.overlaps(r2))
-			collisionMonstreMur(mur);
+			for (Monstre m : level.monstres) {
+				r3.set(m.position.x+0.2f,m.position.y+0.2f,m.frontiere.width-0.4f,m.frontiere.height-0.4f);
+				if (r3.overlaps(r2))
+					collisionMonstreMur(mur,m);
+			}
 		}
 
 		//Test pour les collisions personnage <--> EzCase
@@ -304,6 +306,10 @@ public class WorldController extends InputAdapter {
 	//FIN DE CONTROLE DES COLLISIONS
 
 
+	public int getNbMonstres() {
+		int n = level.monstres.size;
+		return n;
+	}
 
 	@Override
 	public boolean keyUp (int keycode) {

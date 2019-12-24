@@ -34,7 +34,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 	public ARME_UTILISEE armeUtilisee;
 	public boolean attaqueChargee;
 	public ETAT_COMBAT etatCombat;
-
+	public boolean pousse;
 	public enum ORIENTATION_PERSONNAGE{
 		GAUCHE,DROIT,HAUT,BAS;
 	}

@@ -11,11 +11,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
+import com.mygdx.ezmaze.jeu.objects.Caisse;
+import com.mygdx.ezmaze.jeu.objects.Caisse.ETAT_CAISSE;
 import com.mygdx.ezmaze.jeu.objects.Case;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
+import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ETAT_COMBAT;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ORIENTATION_PERSONNAGE;
 
 import ezmaze.util.CameraHelper;
@@ -24,7 +29,7 @@ import ezmaze.util.Constantes;
 public class WorldController extends InputAdapter {
 	private static final String TAG = WorldController.class.getName();
 
-	
+
 	public static float temps = 0;
 
 	//TESTS
@@ -149,16 +154,20 @@ public class WorldController extends InputAdapter {
 			if (Gdx.input.isKeyPressed(Keys.A)) {
 				level.personnage.setAttaque(true);
 			}
+			else if (Gdx.input.isKeyJustPressed(Keys.F)) {
+				level.personnage.pousse = true;
+			}
 			else {
+				level.personnage.pousse=false;
 				level.personnage.setAttaque(false);
 			}
 		}
 	}
 
 	private void handleMonster (float deltaTime) {
-		
+
 		//EN COURS D'IMPLEMENTATION
-		
+
 		//Mouvements du monstre
 		//		int a=(int)(Math.random()*10);
 		//
@@ -213,6 +222,7 @@ public class WorldController extends InputAdapter {
 	private Rectangle r1 = new Rectangle();
 	private Rectangle r2 = new Rectangle();
 	private Rectangle r3 = new Rectangle();
+	private Rectangle r4 = new Rectangle();
 
 	private void collisionPersonnageMur(Mur mur) {
 
@@ -221,11 +231,6 @@ public class WorldController extends InputAdapter {
 		float differenceVerticale = personnage.position.y-(mur.position.y);
 		float differenceHorizontale = personnage.position.x-(mur.position.x);
 
-		//		System.out.println("	(x,X) = ("+personnage.position.x+","+mur.position.x+")"
-		//				+"	(y,Y) = ("+personnage.position.y+","+mur.position.y+")"
-		//				+"\n	Différence Verticale = "+differenceVerticale
-		//				+"\n	Différence Horizontale = "+differenceHorizontale);
-
 		if (Math.abs(differenceVerticale) < 1.0f) {
 			personnage.position.y = personnage.anciennePosition.y;
 
@@ -233,7 +238,7 @@ public class WorldController extends InputAdapter {
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
 			personnage.position.x = personnage.anciennePosition.x;
 		}
-		System.out.println("HOP !");
+		
 	};
 
 	private void collisionMonstreMur(Mur mur, Monstre m) {
@@ -257,20 +262,93 @@ public class WorldController extends InputAdapter {
 	};
 
 	private void collisionPersonnageEzCase(Case ezcase) {
-			//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
+		//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
 		PersonnagePrincipal personnage = level.personnage;
 		float differenceH = personnage.position.x-(ezcase.position.x);
 		if (Math.abs(differenceH)<1.0f)  {
 			numLevel++;;
 			keyUp(Keys.R);
-		
-	}
+
+		}
 	}
 	private void collisionPersonnageMonstre() {
 		/*
 		 * Non implémenté
 		 */
 	};
+
+	private void collisionCaisseMur(Mur mur, Caisse c) {
+
+		float differenceVerticale = c.position.y-(mur.position.y);
+		float differenceHorizontale = c.position.x-(mur.position.x);
+
+		if (Math.abs(differenceVerticale) < 1.0f) {
+			c.position.y = c.anciennePosition.y;
+
+		}
+		if (Math.abs(differenceHorizontale) < 1.0f)  {
+			c.position.x = c.anciennePosition.x;
+		}
+
+	};
+
+	private void collisionCaissePersonnage(Caisse c) {
+		PersonnagePrincipal personnage = level.personnage;
+
+		float differenceVerticale = personnage.position.y-(c.position.y);
+		float differenceHorizontale = personnage.position.x-(c.position.x);
+
+		if (Math.abs(differenceVerticale) < 1.0f) {
+			personnage.position.y = personnage.anciennePosition.y;
+
+		}
+		if (Math.abs(differenceHorizontale) < 1.0f)  {
+			personnage.position.x = personnage.anciennePosition.x;
+		}
+		System.out.println("HOP !");
+	};
+	
+	private void collisionCaisseArriveeCaisse(ArriveeCaisse ac, Caisse c) {
+		c.etat = ETAT_CAISSE.IMMOBILE;
+		c.position = ac.position;
+		c.vitesse.x = 0;
+		c.vitesse.y = 0;
+	};
+	
+	private void pousseCaisse(Caisse c) {
+		PersonnagePrincipal personnage = level.personnage;
+		switch (personnage.orientation) {
+		case BAS:
+			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x-0.1f,-(level.personnage.dimension.y*2-0.1f));
+			if (r1.overlaps(r4)) {
+				System.out.println("BAS");
+				c.position.y = c.anciennePosition.y- 1;
+			}
+			break;
+
+		case HAUT:
+			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x-0.1f,level.personnage.dimension.y*2-0.1f);
+			if (r1.overlaps(r4)) {
+				System.out.println("HAUT");
+				c.position.y = c.anciennePosition.y+ 1;
+			}
+			break;
+		case DROIT:
+			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,-(level.personnage.dimension.x*2-0.1f),level.personnage.dimension.y-0.1f);
+			if (r1.overlaps(r4)) {
+				System.out.println("DROIT");
+				c.position.x = c.anciennePosition.x+ 1;
+			}
+		break;
+		case GAUCHE:
+			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x*2-0.1f,level.personnage.dimension.y-0.1f);
+			if (r1.overlaps(r4)) {
+				System.out.println("GAUCHE");
+				c.position.x = c.anciennePosition.x- 1;
+			}
+		break;
+		}
+	}
 
 	private void testCollision() {
 		/*
@@ -280,33 +358,59 @@ public class WorldController extends InputAdapter {
 		 * De détecter une collision lorsque qu'on ne touche qu'à peine un élément du bout du doigt de pixels...
 		 */
 		r1.set(level.personnage.position.x+0.2f,level.personnage.position.y+0.2f,level.personnage.frontiere.width-0.4f,level.personnage.frontiere.height-0.4f);
-		
 
 
-		//test pour les collisions personnage <--> mur && monstre <--> mur
+		//test pour les collisions personnage <--> mur && monstre <--> mur && caisse <--> mur
 		for (Mur mur : level.murs) {
 			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
 			if (r1.overlaps(r2)) {
-			collisionPersonnageMur(mur);
+				collisionPersonnageMur(mur);
 			}
 			for (Monstre m : level.monstres) {
 				r3.set(m.position.x+0.2f,m.position.y+0.2f,m.frontiere.width-0.4f,m.frontiere.height-0.4f);
 				if (r3.overlaps(r2))
 					collisionMonstreMur(mur,m);
 			}
+
+			for (Caisse c : level.caisses) {
+				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
+				//Caisse-mur
+				if(r3.overlaps(r2))
+					collisionCaisseMur(mur,c);
+				//Caisse-Personnage
+				if(r3.overlaps(r1)) {
+					collisionCaissePersonnage(c);
+				}
+				//Caisse-Case arrivee des caisses
+				for (ArriveeCaisse ac : level.arriveeCaisses) {
+					r4.set(ac.position.x,ac.position.y,ac.frontiere.width,ac.frontiere.height);
+					if (r3.overlaps(r4))
+						collisionCaisseArriveeCaisse(ac,c);
+				}
+				//Test pour la zone d'attaque Personnage <--> Caisse
+				if (level.personnage.pousse) {
+						System.out.println("POUSSE !");
+						pousseCaisse(c);
+				}
+			}
+
 		}
+
+
 
 		//Test pour les collisions personnage <--> EzCase
 		//dès qu'il y a chevauchement on fait appelle a la fonction collisionpersonnageezcase
 		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
-		collisionPersonnageEzCase(level.ezmaze);}
-		
+			collisionPersonnageEzCase(level.ezmaze);}
+
 
 		//Test pour les collisions personnage <--> Monstre
 		/*
 		 * Non implémenté
 		 */
+		
+		
 	}
 	//FIN DE CONTROLE DES COLLISIONS
 

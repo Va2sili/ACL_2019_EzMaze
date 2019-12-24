@@ -24,6 +24,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetCase carre;//On ne peut pas utiliser le nom 'case'
 	public AssetMonstre monstre;
 	public AssetPoliceEcriture police;
+	public AssetCaisse caisse;
+	
 
 
 
@@ -56,6 +58,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		mur = new AssetMur(atlas);
 		carre = new AssetCase(atlas);
 		monstre =new AssetMonstre(atlas);
+		caisse = new AssetCaisse(atlas);
 		police = new AssetPoliceEcriture();
 	}
 
@@ -64,6 +67,13 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * les assets
 	 */
 
+	public class AssetCaisse{
+		public final AtlasRegion caisse;
+		
+		public AssetCaisse(TextureAtlas atlas) {
+			caisse = atlas.findRegion("Caisse");
+		}
+	}
 	public class AssetThesee{
 		public final AtlasRegion personnage;
 
@@ -83,9 +93,10 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public class AssetCase{
 		public final AtlasRegion EZCase;
-
+		public final AtlasRegion arriveeCaisse;
 		public AssetCase(TextureAtlas atlas) {
 			EZCase = atlas.findRegion("victoire");
+			arriveeCaisse = atlas.findRegion("PlaceArrivee");
 		}
 	}
 

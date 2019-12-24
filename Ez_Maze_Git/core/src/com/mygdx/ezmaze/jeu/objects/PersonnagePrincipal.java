@@ -1,7 +1,12 @@
 package com.mygdx.ezmaze.jeu.objects;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.ezmaze.jeu.Assets;
 
 public class PersonnagePrincipal extends AbstractGameObject {
@@ -30,6 +35,11 @@ public class PersonnagePrincipal extends AbstractGameObject {
 	public boolean attaqueChargee;
 	public ETAT_COMBAT etatCombat;
 
+	public enum ORIENTATION_PERSONNAGE{
+		GAUCHE,DROIT,HAUT,BAS;
+	}
+	public ORIENTATION_PERSONNAGE orientation; 
+	
 	public PersonnagePrincipal() {
 		// TODO Auto-generated constructor stub
 		init();
@@ -59,6 +69,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		armeUtilisee = ARME_UTILISEE.NONE;
 		etatCombat = ETAT_COMBAT.PAISIBLE;
 		tempsChargeAttaque = 0f;
+		orientation = ORIENTATION_PERSONNAGE.BAS;
 	};
 
 	//Les méthodes pour définir les états du personnage
@@ -153,11 +164,40 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		TextureRegion reg = null;
 		
 		//On met une couleur rouge pour le personnage lorsque son attaque est chargée
+		
+		
+		Pixmap pixmapAttaque = new Pixmap(2*(int)dimension.x,(int)dimension.y,Format.RGB888);
+		pixmapAttaque.setColor(1,0.6f,0,1);
+		pixmapAttaque.fill();
+		
+		Texture texture = new Texture(pixmapAttaque);
+		Sprite spr = new Sprite(texture);
+		//spr.setSize(1, 1);
+		spr.setOrigin(origin.x, origin.y);
+		spr.setPosition(position.x, position.y);
+		switch (orientation) {
+		case GAUCHE:
+			spr.setRotation(180);
+			break;
+
+		case DROIT:
+			
+			break;
+		case HAUT:
+			spr.setRotation(90);
+			break;
+		case BAS:
+			spr.setRotation(-90);
+			break;
+		}
+		
+		//On dessine la zone d'attaque
+		spr.draw(batch);
+		batch.setColor(1,1,1,1);
+		//On dessine le personnage
 		if (attaqueChargee) {
 			batch.setColor(1f,0f,0f,1f);
 		}
-		
-		//On dessine le personnage
 		reg = regPersonnage;
 		//batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y);
 		batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);

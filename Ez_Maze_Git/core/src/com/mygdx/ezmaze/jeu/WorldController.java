@@ -16,6 +16,7 @@ import com.mygdx.ezmaze.jeu.objects.Case;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
+import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ORIENTATION_PERSONNAGE;
 
 import ezmaze.util.CameraHelper;
 import ezmaze.util.Constantes;
@@ -129,15 +130,19 @@ public class WorldController extends InputAdapter {
 			//Mouvements du joueur
 			if (Gdx.input.isKeyPressed(Keys.Q)) {
 				level.personnage.vitesse.x = -level.personnage.vitesseMax.x;
+				level.personnage.orientation = ORIENTATION_PERSONNAGE.GAUCHE;
 			}
 			else if (Gdx.input.isKeyPressed(Keys.D)) {
 				level.personnage.vitesse.x = level.personnage.vitesseMax.x;
+				level.personnage.orientation = ORIENTATION_PERSONNAGE.DROIT;
 			}
 			else if (Gdx.input.isKeyPressed(Keys.Z)) {
 				level.personnage.vitesse.y = level.personnage.vitesseMax.y;
+				level.personnage.orientation = ORIENTATION_PERSONNAGE.HAUT;
 			}
 			else if (Gdx.input.isKeyPressed(Keys.S)) {
 				level.personnage.vitesse.y = -level.personnage.vitesseMax.y;
+				level.personnage.orientation = ORIENTATION_PERSONNAGE.BAS;
 			}
 
 			//ATTAQUE

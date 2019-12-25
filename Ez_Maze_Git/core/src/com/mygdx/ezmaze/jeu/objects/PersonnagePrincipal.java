@@ -14,6 +14,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 
 	private static int POINTS_DE_VIE = 3;
 	private static float DEGATS_ATTAQUE = 1f;
+	private Pixmap pixmapAttaque;
 
 	public TextureRegion regPersonnage;
 
@@ -46,7 +47,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 	}
 
 	public void init() {
-		dimension.set(1,1);
+		dimension.set(0.6f,0.8f);
 		regPersonnage = Assets.instance.thesee.personnage;
 		//Centrer l'origine de l'image
 		origin.set(dimension.x/2, dimension.y/2);
@@ -70,6 +71,10 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		etatCombat = ETAT_COMBAT.PAISIBLE;
 		tempsChargeAttaque = 0f;
 		orientation = ORIENTATION_PERSONNAGE.BAS;
+		
+		pixmapAttaque = new Pixmap(2*(int)dimension.x,(int)dimension.y,Format.RGB888);
+		pixmapAttaque.setColor(1,0.6f,0,1);
+		pixmapAttaque.fill();
 	};
 
 	//Les méthodes pour définir les états du personnage
@@ -163,16 +168,13 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		// TODO Auto-generated method stub
 		TextureRegion reg = null;
 		
-		//On met une couleur rouge pour le personnage lorsque son attaque est chargée
 		
 		
-		Pixmap pixmapAttaque = new Pixmap(2*(int)dimension.x,(int)dimension.y,Format.RGB888);
-		pixmapAttaque.setColor(1,0.6f,0,1);
-		pixmapAttaque.fill();
+		
 		
 		Texture texture = new Texture(pixmapAttaque);
 		Sprite spr = new Sprite(texture);
-		//spr.setSize(1, 1);
+		
 		spr.setOrigin(origin.x, origin.y);
 		spr.setPosition(position.x, position.y);
 		switch (orientation) {
@@ -194,10 +196,12 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		//On dessine la zone d'attaque
 		spr.draw(batch);
 		batch.setColor(1,1,1,1);
-		//On dessine le personnage
+		
+		//On met une couleur rouge pour le personnage lorsque son attaque est chargée
 		if (attaqueChargee) {
 			batch.setColor(1f,0f,0f,1f);
 		}
+		//On dessine le personnage
 		reg = regPersonnage;
 		//batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y);
 		batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);

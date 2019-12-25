@@ -34,9 +34,9 @@ monstre
   index: -1
 personnage
   rotate: false
-  xy: 908, 892
-  size: 21, 51
-  orig: 21, 51
+  xy: 908, 897
+  size: 17, 46
+  orig: 17, 46
   offset: 0, 0
   index: -1
 victoire

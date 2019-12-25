@@ -29,6 +29,7 @@ public class Caisse extends AbstractGameObject {
 		etat = ETAT_CAISSE.MOVIBLE;
 		vitesseMax.set(2,2);
 		frottement.set(2,2);
+		vitesse.set(0,0);
 	}
 
 	@Override

@@ -238,7 +238,7 @@ public class WorldController extends InputAdapter {
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
 			personnage.position.x = personnage.anciennePosition.x;
 		}
-		
+
 	};
 
 	private void collisionMonstreMur(Mur mur, Monstre m) {
@@ -278,17 +278,26 @@ public class WorldController extends InputAdapter {
 	};
 
 	private void collisionCaisseMur(Mur mur, Caisse c) {
-
-		float differenceVerticale = c.position.y-(mur.position.y);
-		float differenceHorizontale = c.position.x-(mur.position.x);
-
-		if (Math.abs(differenceVerticale) < 1.0f) {
-			c.position.y = c.anciennePosition.y;
+		PersonnagePrincipal personnage = level.personnage;
+		switch (personnage.orientation) {
+		case HAUT:
+			c.position.y = c.anciennePosition.y-1;
+			break;
+		case BAS:
+			c.position.y = c.anciennePosition.y+1;
+			break;
+		case GAUCHE:
+			c.position.x = c.anciennePosition.x+1;
+			break;
+		case DROIT:
+			c.position.x = c.anciennePosition.x-1;
+			break;
 
 		}
-		if (Math.abs(differenceHorizontale) < 1.0f)  {
-			c.position.x = c.anciennePosition.x;
-		}
+		
+		
+		System.out.println("HOP ! "+c.anciennePosition);
+
 
 	};
 
@@ -305,48 +314,48 @@ public class WorldController extends InputAdapter {
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
 			personnage.position.x = personnage.anciennePosition.x;
 		}
-		System.out.println("HOP !");
+
 	};
-	
+
 	private void collisionCaisseArriveeCaisse(ArriveeCaisse ac, Caisse c) {
 		c.etat = ETAT_CAISSE.IMMOBILE;
 		c.position = ac.position;
 		c.vitesse.x = 0;
 		c.vitesse.y = 0;
 	};
-	
+
 	private void pousseCaisse(Caisse c) {
 		PersonnagePrincipal personnage = level.personnage;
 		switch (personnage.orientation) {
 		case BAS:
-			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x-0.1f,-(level.personnage.dimension.y*2-0.1f));
-			if (r1.overlaps(r4)) {
+			r4.set(level.personnage.dimension.x-0.1f,-(level.personnage.dimension.y*2-0.1f),level.personnage.position.x+0.1f,level.personnage.position.y+0.1f);
+			if (r3.overlaps(r4)) {
 				System.out.println("BAS");
-				c.position.y = c.anciennePosition.y- 1;
+				c.position.y = c.anciennePosition.y - 1;
 			}
 			break;
 
 		case HAUT:
 			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x-0.1f,level.personnage.dimension.y*2-0.1f);
-			if (r1.overlaps(r4)) {
+			if (r3.overlaps(r4)) {
 				System.out.println("HAUT");
-				c.position.y = c.anciennePosition.y+ 1;
+				c.position.y = c.anciennePosition.y + 1;
 			}
 			break;
 		case DROIT:
-			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,-(level.personnage.dimension.x*2-0.1f),level.personnage.dimension.y-0.1f);
-			if (r1.overlaps(r4)) {
+			r4.set(-(level.personnage.dimension.x*2-0.1f),level.personnage.dimension.y-0.1f,level.personnage.position.x+0.1f,level.personnage.position.y+0.1f);
+			if (r3.overlaps(r4)) {
 				System.out.println("DROIT");
-				c.position.x = c.anciennePosition.x+ 1;
+				c.position.x = c.anciennePosition.x + 1;
 			}
-		break;
+			break;
 		case GAUCHE:
 			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x*2-0.1f,level.personnage.dimension.y-0.1f);
-			if (r1.overlaps(r4)) {
+			if (r3.overlaps(r4)) {
 				System.out.println("GAUCHE");
-				c.position.x = c.anciennePosition.x- 1;
+				c.position.x = c.anciennePosition.x - 1;
 			}
-		break;
+			break;
 		}
 	}
 
@@ -357,8 +366,8 @@ public class WorldController extends InputAdapter {
 		 * En effet, le bord des images comporte souvent une marge transparente... Ca évite aussi
 		 * De détecter une collision lorsque qu'on ne touche qu'à peine un élément du bout du doigt de pixels...
 		 */
-		r1.set(level.personnage.position.x+0.2f,level.personnage.position.y+0.2f,level.personnage.frontiere.width-0.4f,level.personnage.frontiere.height-0.4f);
-
+		//r1.set(level.personnage.position.x+0.2f,level.personnage.position.y+0.2f,level.personnage.frontiere.width-0.4f,level.personnage.frontiere.height-0.4f);
+		r1.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,level.personnage.frontiere.height);
 
 		//test pour les collisions personnage <--> mur && monstre <--> mur && caisse <--> mur
 		for (Mur mur : level.murs) {
@@ -374,6 +383,11 @@ public class WorldController extends InputAdapter {
 
 			for (Caisse c : level.caisses) {
 				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
+				//Test pour la zone d'attaque Personnage <--> Caisse
+				if (level.personnage.pousse) {
+					System.out.println("POUSSE !");
+					pousseCaisse(c);
+				}
 				//Caisse-mur
 				if(r3.overlaps(r2))
 					collisionCaisseMur(mur,c);
@@ -387,11 +401,7 @@ public class WorldController extends InputAdapter {
 					if (r3.overlaps(r4))
 						collisionCaisseArriveeCaisse(ac,c);
 				}
-				//Test pour la zone d'attaque Personnage <--> Caisse
-				if (level.personnage.pousse) {
-						System.out.println("POUSSE !");
-						pousseCaisse(c);
-				}
+
 			}
 
 		}
@@ -409,8 +419,8 @@ public class WorldController extends InputAdapter {
 		/*
 		 * Non implémenté
 		 */
-		
-		
+
+
 	}
 	//FIN DE CONTROLE DES COLLISIONS
 

@@ -72,7 +72,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		tempsChargeAttaque = 0f;
 		orientation = ORIENTATION_PERSONNAGE.BAS;
 		
-		pixmapAttaque = new Pixmap(2*(int)dimension.x,(int)dimension.y,Format.RGB888);
+		pixmapAttaque = new Pixmap(2,1,Format.RGB888);
 		pixmapAttaque.setColor(1,0.6f,0,1);
 		pixmapAttaque.fill();
 	};

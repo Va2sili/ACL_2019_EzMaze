@@ -4,9 +4,23 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Mur
+Caisse
   rotate: false
   xy: 846, 945
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+Mur
+  rotate: false
+  xy: 846, 883
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+PlaceArrivee
+  rotate: false
+  xy: 908, 945
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
@@ -20,14 +34,14 @@ monstre
   index: -1
 personnage
   rotate: false
-  xy: 908, 954
-  size: 21, 51
-  orig: 21, 51
+  xy: 908, 897
+  size: 17, 46
+  orig: 17, 46
   offset: 0, 0
   index: -1
 victoire
   rotate: false
-  xy: 846, 883
+  xy: 846, 821
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

@@ -10,7 +10,7 @@ Pour ce faire :
   5. On y trouve un fichier .jar dont le nom est de la forme : "_EzMaze-sprint.1-build-200641_29112019_" ([cf. le wiki EzMaze](https://github.com/Va2sili/ACL_2019_EzMaze/wiki/GRADLE#libgdx---outils-de-build))
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
-## Etat d'avancée du Sprint 1
+## Etat d'avancée du Sprint 2
  
  - [ ] Apparition de monstres qui se déplacent et font perdre le joueur
  - [ ] Attaquer les monstres

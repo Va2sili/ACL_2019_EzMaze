@@ -13,6 +13,7 @@ public class ArriveeCaisse extends AbstractGameObject {
 	 */
 	private TextureRegion arriveeCaisse;
 	
+	
 	public ArriveeCaisse() {
 		init();
 	}
@@ -20,6 +21,7 @@ public class ArriveeCaisse extends AbstractGameObject {
 	private void init() {
 		dimension.set(1,1);
 		arriveeCaisse = Assets.instance.carre.arriveeCaisse;
+		frontiere.set(0,0,dimension.x,dimension.y);
 	}
 
 	@Override

@@ -265,7 +265,7 @@ public class WorldController extends InputAdapter {
 		//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
 		PersonnagePrincipal personnage = level.personnage;
 		float differenceH = personnage.position.x-(ezcase.position.x);
-		if (Math.abs(differenceH)<1.0f)  {
+		if (Math.abs(differenceH)<1.0f && level.arriveeCaisses.size==0)  {
 			numLevel++;;
 			keyUp(Keys.R);
 
@@ -328,31 +328,27 @@ public class WorldController extends InputAdapter {
 		PersonnagePrincipal personnage = level.personnage;
 		switch (personnage.orientation) {
 		case BAS:
-			r4.set(level.personnage.dimension.x-0.1f,-(level.personnage.dimension.y*2-0.1f),level.personnage.position.x+0.1f,level.personnage.position.y+0.1f);
+			r4.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,-1.2f*level.personnage.frontiere.height);
 			if (r3.overlaps(r4)) {
-				System.out.println("BAS");
 				c.position.y = c.anciennePosition.y - 1;
 			}
 			break;
 
 		case HAUT:
-			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x-0.1f,level.personnage.dimension.y*2-0.1f);
+			r4.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,1.2f*level.personnage.frontiere.height);
 			if (r3.overlaps(r4)) {
-				System.out.println("HAUT");
 				c.position.y = c.anciennePosition.y + 1;
 			}
 			break;
 		case DROIT:
-			r4.set(-(level.personnage.dimension.x*2-0.1f),level.personnage.dimension.y-0.1f,level.personnage.position.x+0.1f,level.personnage.position.y+0.1f);
+			r4.set(level.personnage.position.x,level.personnage.position.y,1.2f*level.personnage.frontiere.width,level.personnage.frontiere.height);
 			if (r3.overlaps(r4)) {
-				System.out.println("DROIT");
 				c.position.x = c.anciennePosition.x + 1;
 			}
 			break;
 		case GAUCHE:
-			r4.set(level.personnage.position.x+0.1f,level.personnage.position.y+0.1f,level.personnage.dimension.x*2-0.1f,level.personnage.dimension.y-0.1f);
+			r4.set(level.personnage.position.x,level.personnage.position.y,-1.2f*level.personnage.frontiere.width,level.personnage.frontiere.height);
 			if (r3.overlaps(r4)) {
-				System.out.println("GAUCHE");
 				c.position.x = c.anciennePosition.x - 1;
 			}
 			break;
@@ -384,8 +380,7 @@ public class WorldController extends InputAdapter {
 			for (Caisse c : level.caisses) {
 				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
 				//Test pour la zone d'attaque Personnage <--> Caisse
-				if (level.personnage.pousse) {
-					System.out.println("POUSSE !");
+				if (level.personnage.pousse && c.etat != ETAT_CAISSE.IMMOBILE) {
 					pousseCaisse(c);
 				}
 				//Caisse-mur
@@ -396,10 +391,15 @@ public class WorldController extends InputAdapter {
 					collisionCaissePersonnage(c);
 				}
 				//Caisse-Case arrivee des caisses
+				int index= 0;
 				for (ArriveeCaisse ac : level.arriveeCaisses) {
 					r4.set(ac.position.x,ac.position.y,ac.frontiere.width,ac.frontiere.height);
-					if (r3.overlaps(r4))
+					if (r3.overlaps(r4)) {
+						System.out.println("BLA");
 						collisionCaisseArriveeCaisse(ac,c);
+						level.arriveeCaisses.removeIndex(index);
+					}
+					index++;
 				}
 
 			}

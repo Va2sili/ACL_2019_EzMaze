@@ -39,9 +39,12 @@ public class Caisse extends AbstractGameObject {
 		float relY = 0;
 		
 		//Dessin
+		if (etat == ETAT_CAISSE.IMMOBILE) {
+			batch.setColor(1f,0f,0f,1f);
+		}
 		reg = caisse;
 		batch.draw(reg.getTexture(), position.x+relX, position.y+relY, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);
-		
+		batch.setColor(1,1,1,1);
 	}
 	
 	@Override

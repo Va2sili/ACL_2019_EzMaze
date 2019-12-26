@@ -29,4 +29,8 @@ public class RenderGUI {
 		timePolice.draw(batch, "Temps : "+(int)WorldController.temps, x, y);
 		timePolice.setColor(1,1,1,1);
 	}
+	
+	public static void renderNbCaissesRestantes(SpriteBatch batch, WorldController worldController) {
+		
+	}
 }

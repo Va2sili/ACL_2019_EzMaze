@@ -11,13 +11,14 @@ Pour ce faire :
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
 ## Etat d'avancée du Sprint 1
- - [x] Affichage du joueur et déplacement sur le plateau
- 
- - [x] Impossibilité de traverser les murs
- 
- - [x] Case de trésor pour gagner et finir le jeu
  
  - [ ] Apparition de monstres qui se déplacent et font perdre le joueur
+ - [ ] Attaquer les monstres
+ - [ ] Système de résurrection
+ - [ ] Case de téléportation
+ - [ ] Case de boue
+ - [x] GUI
+      
 
 ## Informations Supplémentaires
 On peut retrouver le dépôt GIT concernant les images utilisées dans le WIKI à l'adresse : https://github.com/Sutcenes/EzMazeWikiSource

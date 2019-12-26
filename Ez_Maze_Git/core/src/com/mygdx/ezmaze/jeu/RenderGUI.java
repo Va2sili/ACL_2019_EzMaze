@@ -12,7 +12,7 @@ public class RenderGUI {
 		float x = -15;
 		float y = -15;
 		batch.draw(Assets.instance.monstre.monster, x, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
-		Assets.instance.police.gros.draw(batch, ""+worldController.getNbMonstres(), x+75,y+37);
+		Assets.instance.police.moyen.draw(batch, ""+worldController.getNbMonstres(), x+75,y+37);
 	}
 	
 	public static void renderGuiTimeCounter(SpriteBatch batch, OrthographicCamera cameraGUI) {
@@ -31,6 +31,15 @@ public class RenderGUI {
 	}
 	
 	public static void renderNbCaissesRestantes(SpriteBatch batch, WorldController worldController) {
-		
+		float x = -15;
+		float y = 55;
+		batch.draw(Assets.instance.caisse.caisse, x, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
+		BitmapFont timePolice = Assets.instance.police.moyen;
+		int s =worldController.level.arriveeCaisses.size;
+		if (s == 0) {
+			timePolice.setColor(0,1,0,1);
+		}
+		timePolice.draw(batch, ""+s, x+75,y+37);
+		timePolice.setColor(1,1,1,1);
 	}
 }

@@ -22,8 +22,8 @@ public class Constantes {
 
 	//Mise en place d'un GUI
 	//Il est à la taille de la fenêtre
-	public static final float VIEWPORT_GUI_WIDTH = 800.0f;
-	public static final float VIEWPORT_GUI_HEIGHT = 480.0f;
+	public static final float VIEWPORT_GUI_WIDTH = 5.0f;
+	public static final float VIEWPORT_GUI_HEIGHT = 5.0f;
 	
 	//NOMBRE DE RESURECTIONS INITIALES
 	public static final int RESU_INIT = 3;

@@ -12,7 +12,7 @@ import com.mygdx.ezmaze.jeu.Assets;
 public class PersonnagePrincipal extends AbstractGameObject {
 	public static final String TAG = PersonnagePrincipal.class.getName();
 
-	private static int POINTS_DE_VIE = 3;
+	private static float POINTS_DE_VIE = 3;
 	private static float DEGATS_ATTAQUE = 1f;
 	private Pixmap pixmapAttaque;
 
@@ -102,6 +102,9 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		}
 	}
 	
+	public float getPdv() {
+		return POINTS_DE_VIE;
+	}
 	
 	//FIN DES METHODE D'ETAT DU PERSONNAGE
 

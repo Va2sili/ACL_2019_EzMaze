@@ -64,6 +64,7 @@ public class WorldRenderer implements Disposable {
 		RenderGUI.renderGuiNbMonstres(batch,worldController);
 		RenderGUI.renderGuiTimeCounter(batch, cameraGUI);
 		RenderGUI.renderNbCaissesRestantes(batch, worldController);
+		RenderGUI.renderGuiPdvPerso(batch, worldController);
 		batch.end();
 	}
 	

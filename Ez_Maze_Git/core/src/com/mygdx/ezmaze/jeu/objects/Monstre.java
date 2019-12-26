@@ -9,7 +9,7 @@ import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ETAT_COMBAT;
 public class Monstre extends AbstractGameObject {
 	public static final String TAG = Monstre.class.getName();
 
-	private static int POINTS_DE_VIE = 2;
+	private static float POINTS_DE_VIE = 2;
 	private static float DEGATS_ATTAQUE = 1f;
 	public TextureRegion regMonstre;
 
@@ -83,6 +83,9 @@ public class Monstre extends AbstractGameObject {
 		}
 	}
 
+	public float getPdV() {
+		return POINTS_DE_VIE;
+	}
 	//FIN DES METHODE D'ETAT DU MONSTRE
 
 

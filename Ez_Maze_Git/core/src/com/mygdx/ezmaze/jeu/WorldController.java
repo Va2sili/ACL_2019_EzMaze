@@ -277,7 +277,7 @@ public class WorldController extends InputAdapter {
 		 */
 	};
 
-	private void collisionCaisseMur(Mur mur, Caisse c) {
+	private void collisionCaisseMur(Caisse c) {
 		PersonnagePrincipal personnage = level.personnage;
 		switch (personnage.orientation) {
 		case HAUT:
@@ -294,12 +294,9 @@ public class WorldController extends InputAdapter {
 			break;
 
 		}
-		
-		
-		System.out.println("HOP ! "+c.anciennePosition);
-
-
 	};
+
+
 
 	private void collisionCaissePersonnage(Caisse c) {
 		PersonnagePrincipal personnage = level.personnage;
@@ -325,31 +322,126 @@ public class WorldController extends InputAdapter {
 	};
 
 	private void pousseCaisse(Caisse c) {
-		PersonnagePrincipal personnage = level.personnage;
-		switch (personnage.orientation) {
+		PersonnagePrincipal p = level.personnage;
+		r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
+		boolean mouvementPossible = true;
+		switch (p.orientation) {
 		case BAS:
-			r4.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,-1.2f*level.personnage.frontiere.height);
-			if (r3.overlaps(r4)) {
-				c.position.y = c.anciennePosition.y - 1;
+			r4.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+			//System.out.println(r4+"   "+r3+"\n");
+			if (r4.overlaps(r3)) {
+				r3.set(c.position.x,c.position.y-c.frontiere.height,c.frontiere.width,c.frontiere.height);
+				for (Mur mur : level.murs) {
+					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
+					
+					if(r3.overlaps(r2)) {
+						
+						mouvementPossible = false;
+					}
+				}
+				for (int i = 0; i<level.caisses.size; i++) {
+					Caisse c2 = level.caisses.get(i);
+					if (c2!=c) {
+						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
+						
+						if(r3.overlaps(r2)) {
+							
+							mouvementPossible = false;
+						}
+					}
+				}
+				if (mouvementPossible) {
+					c.position.y = c.anciennePosition.y - 1;
+				}
 			}
+
 			break;
 
 		case HAUT:
-			r4.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,1.2f*level.personnage.frontiere.height);
-			if (r3.overlaps(r4)) {
-				c.position.y = c.anciennePosition.y + 1;
+			r4.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+			//System.out.println(r4+"   "+r3+"\n");
+			if (r4.overlaps(r3)) {
+				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height+c.dimension.y);
+				for (Mur mur : level.murs) {
+					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
+					
+					if(r3.overlaps(r2)) {
+						
+						mouvementPossible = false;
+					}
+				}
+				for (int i = 0; i<level.caisses.size; i++) {
+					Caisse c2 = level.caisses.get(i);
+					if (c2!=c) {
+						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
+						
+						if(r3.overlaps(r2)) {
+							
+							mouvementPossible = false;
+						}
+					}
+				}
+				if (mouvementPossible) {
+					c.position.y = c.anciennePosition.y + 1;
+				}
 			}
 			break;
 		case DROIT:
-			r4.set(level.personnage.position.x,level.personnage.position.y,1.2f*level.personnage.frontiere.width,level.personnage.frontiere.height);
-			if (r3.overlaps(r4)) {
-				c.position.x = c.anciennePosition.x + 1;
+			r4.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+			//System.out.println(r4+"   "+r3+"\n");
+			if (r4.overlaps(r3)) {
+				r3.set(c.position.x+c.dimension.x,c.position.y,c.frontiere.width,c.frontiere.height);
+				for (Mur mur : level.murs) {
+					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
+					
+					if(r3.overlaps(r2)) {
+						
+						mouvementPossible = false;
+					}
+				}
+				for (int i = 0; i<level.caisses.size; i++) {
+					Caisse c2 = level.caisses.get(i);
+					if (c2!=c) {
+						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
+						
+						if(r3.overlaps(r2)) {
+							
+							mouvementPossible = false;
+						}
+					}
+				}
+				if (mouvementPossible) { 
+					c.position.x = c.anciennePosition.x + 1;
+				}
 			}
 			break;
 		case GAUCHE:
-			r4.set(level.personnage.position.x,level.personnage.position.y,-1.2f*level.personnage.frontiere.width,level.personnage.frontiere.height);
-			if (r3.overlaps(r4)) {
-				c.position.x = c.anciennePosition.x - 1;
+			r4.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+			//System.out.println(r4+"   "+r3+"\n");
+			if (r4.overlaps(r3)) {
+				r3.set(c.position.x-c.dimension.x,c.position.y,c.frontiere.width,c.frontiere.height);
+				for (Mur mur : level.murs) {
+					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
+					
+					if(r3.overlaps(r2)) {
+						
+						mouvementPossible = false;
+					}
+				}
+				for (int i = 0; i<level.caisses.size; i++) {
+					Caisse c2 = level.caisses.get(i);
+					if (c2!=c) {
+						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
+						
+						if(r3.overlaps(r2)) {
+							
+							mouvementPossible = false;
+						}
+					}
+				}
+				if (mouvementPossible) {
+					c.position.x = c.anciennePosition.x - 1;
+				}
 			}
 			break;
 		}
@@ -365,7 +457,16 @@ public class WorldController extends InputAdapter {
 		//r1.set(level.personnage.position.x+0.2f,level.personnage.position.y+0.2f,level.personnage.frontiere.width-0.4f,level.personnage.frontiere.height-0.4f);
 		r1.set(level.personnage.position.x,level.personnage.position.y,level.personnage.frontiere.width,level.personnage.frontiere.height);
 
-		//test pour les collisions personnage <--> mur && monstre <--> mur && caisse <--> mur
+		//Caisse Collision
+		if (level.personnage.pousse) {
+			for (Caisse c : level.caisses) {
+				if (c.etat != ETAT_CAISSE.IMMOBILE) {
+					pousseCaisse(c);
+				}
+			}
+		}
+
+		//test pour les collisions personnage <--> mur && monstre <--> mur
 		for (Mur mur : level.murs) {
 			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
 			if (r1.overlaps(r2)) {
@@ -377,31 +478,25 @@ public class WorldController extends InputAdapter {
 					collisionMonstreMur(mur,m);
 			}
 
-			for (Caisse c : level.caisses) {
-				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
-				//Test pour la zone d'attaque Personnage <--> Caisse
-				if (level.personnage.pousse && c.etat != ETAT_CAISSE.IMMOBILE) {
-					pousseCaisse(c);
-				}
-				//Caisse-mur
-				if(r3.overlaps(r2))
-					collisionCaisseMur(mur,c);
-				//Caisse-Personnage
-				if(r3.overlaps(r1)) {
-					collisionCaissePersonnage(c);
-				}
-				//Caisse-Case arrivee des caisses
-				int index= 0;
-				for (ArriveeCaisse ac : level.arriveeCaisses) {
-					r4.set(ac.position.x,ac.position.y,ac.frontiere.width,ac.frontiere.height);
-					if (r3.overlaps(r4)) {
-						System.out.println("BLA");
-						collisionCaisseArriveeCaisse(ac,c);
-						level.arriveeCaisses.removeIndex(index);
-					}
-					index++;
-				}
 
+
+		}
+		for (Caisse c : level.caisses) {
+			r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height);
+			//Caisse-Personnage
+			if(r3.overlaps(r1)) {
+				collisionCaissePersonnage(c);
+			}
+
+			//Caisse-Case arrivee des caisses
+			int index= 0;
+			for (ArriveeCaisse ac : level.arriveeCaisses) {
+				r4.set(ac.position.x,ac.position.y,ac.frontiere.width,ac.frontiere.height);
+				if (r3.overlaps(r4)) {
+					collisionCaisseArriveeCaisse(ac,c);
+					level.arriveeCaisses.removeIndex(index);
+				}
+				index++;
 			}
 
 		}

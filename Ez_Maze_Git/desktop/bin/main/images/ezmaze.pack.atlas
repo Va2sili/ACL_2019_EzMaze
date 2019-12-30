@@ -25,6 +25,13 @@ PlaceArrivee
   orig: 60, 60
   offset: 0, 0
   index: -1
+ghost
+  rotate: false
+  xy: 908, 896
+  size: 55, 47
+  orig: 55, 47
+  offset: 0, 0
+  index: -1
 monstre
   rotate: false
   xy: 2, 2
@@ -34,7 +41,7 @@ monstre
   index: -1
 personnage
   rotate: false
-  xy: 908, 897
+  xy: 970, 959
   size: 17, 46
   orig: 17, 46
   offset: 0, 0

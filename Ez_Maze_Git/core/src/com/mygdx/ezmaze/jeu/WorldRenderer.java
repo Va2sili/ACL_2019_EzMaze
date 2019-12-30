@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.ezmaze.jeu.objects.projectiles.Projectile;
 
 import ezmaze.util.Constantes;
 
 
 public class WorldRenderer implements Disposable {
 	//Camera préimplémentée dans LibGDX
-	private OrthographicCamera camera;
+	static OrthographicCamera camera;
 	//Camera supplémentaire pour le GUI
 	private OrthographicCamera cameraGUI;
 	//SpriteBatch implémente l'interface "disposable" et c'est pourquoi on implémentera
@@ -55,6 +56,9 @@ public class WorldRenderer implements Disposable {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		worldController.level.render(batch);
+		for (Projectile p : worldController.projectiles) {
+			p.render(batch);
+		}
 		batch.end();
 	}
 	

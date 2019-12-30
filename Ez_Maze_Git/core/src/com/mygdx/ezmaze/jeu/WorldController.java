@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
@@ -24,6 +25,7 @@ import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ETAT_COMBAT;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ORIENTATION_PERSONNAGE;
+import com.mygdx.ezmaze.jeu.objects.projectiles.Projectile;
 
 import ezmaze.util.CameraHelper;
 import ezmaze.util.Constantes;
@@ -43,6 +45,7 @@ public class WorldController extends InputAdapter {
 	public CameraHelper cameraHelper;
 
 	public Level level;
+	public Array<Projectile> projectiles;
 	public int numLevel=0;
 	public int resurections;
 	public int score;
@@ -51,6 +54,7 @@ public class WorldController extends InputAdapter {
 		score = 0;
 		numLevel = numLevel%(Constantes.LEVEL.length);
 		level = new Level(Constantes.LEVEL[numLevel]);
+		projectiles = new Array<Projectile>();
 		cameraHelper.setTarget(level.personnage);
 	}
 
@@ -84,8 +88,13 @@ public class WorldController extends InputAdapter {
 		handleMonster(deltaTime);
 		IaFantome();
 		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
-		//updateTestObjets(deltaTime);//CODE POUBELLE
 		handleInputGame(deltaTime);
+
+		//Udpdate des projectiles !
+		for (Projectile p : projectiles) {
+			p.update(deltaTime);
+		}
+
 		level.update(deltaTime);
 		testCollision();
 		cameraHelper.update(deltaTime);
@@ -160,6 +169,21 @@ public class WorldController extends InputAdapter {
 			else if (Gdx.input.isKeyJustPressed(Keys.F)) {
 				level.personnage.pousse = true;
 			}
+			else if (Gdx.input.isTouched()) {
+				if (projectiles.size==0) {
+					Vector3 positionSouris = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+					WorldRenderer.camera.unproject(positionSouris);
+					//Les directions du tir
+					float dx = (positionSouris.x-(level.personnage.position.x+level.personnage.origin.x))/(Math.abs(positionSouris.x-level.personnage.position.x+level.personnage.origin.x)+Math.abs(positionSouris.y-level.personnage.position.y+level.personnage.origin.y));
+					float dy = (positionSouris.y-(level.personnage.position.y+level.personnage.origin.y))/(Math.abs(positionSouris.x-level.personnage.position.x+level.personnage.origin.x)+Math.abs(positionSouris.y-level.personnage.position.y+level.personnage.origin.y));
+					//Création du projectile
+					Projectile p = new Projectile(level.personnage.position.x+level.personnage.origin.x, level.personnage.position.y+level.personnage.origin.y, dx, dy);
+					projectiles.add(p);
+				}
+				
+				
+				
+				}
 			else {
 				level.personnage.pousse=false;
 				level.personnage.setAttaque(false);
@@ -450,6 +474,14 @@ public class WorldController extends InputAdapter {
 		}
 	}
 
+	private void collisionProjectile(Projectile p) {
+		p.ballonCreuve = true;
+		p.vitesse.set(0,0);
+	}
+	private void ramasseProjectile(Projectile p) {
+		projectiles.removeValue(p, false);
+	}
+
 	private void testCollision() {
 		/*
 		 * Les coefficients permettent d'adapter la taille de l'objet pour le moteur physique.
@@ -480,6 +512,14 @@ public class WorldController extends InputAdapter {
 				if (r3.overlaps(r2))
 					collisionMonstreMur(mur,m);
 			}
+			for (Projectile p : projectiles) {
+				if (!p.ballonCreuve) {
+					r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+					if (r2.overlaps(r3)) {
+						collisionProjectile(p);
+					}
+				}
+			}
 
 
 
@@ -489,6 +529,15 @@ public class WorldController extends InputAdapter {
 			//Caisse-Personnage
 			if(r3.overlaps(r1)) {
 				collisionCaissePersonnage(c);
+			}
+			//Ballon-Caisse
+			for (Projectile p : projectiles) {
+				if (!p.ballonCreuve) {
+					r4.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+					if (r3.overlaps(r4)) {
+						collisionProjectile(p);
+					}
+				}
 			}
 
 			//Caisse-Case arrivee des caisses
@@ -515,11 +564,33 @@ public class WorldController extends InputAdapter {
 
 		//Test pour les collisions personnage <--> Monstre
 
-		//Test pour les collisions personnage <--> Fantome
+		
 		for (Fantome f : level.fantomes) {
+			//Test pour les collisions personnage <--> Fantome
 			r4.set(f.position.x,f.position.y,f.frontiere.width,f.frontiere.height);
 			if (r1.overlaps(r4)) {
 				level.personnage.sommePdv(-f.DEGATS_ATTAQUE);
+			}
+			//Fantome - Ballon
+			for (Projectile p : projectiles) {
+				if (!p.ballonCreuve) {
+					r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+					if (r4.overlaps(r3)) {
+						System.out.println("PLOP !");
+						f.position.set(f.spawn.x,f.spawn.y);
+						collisionProjectile(p);
+					}
+				}
+			}
+		}
+		
+		//Collision Personnage - Ballon creuvé
+		for (Projectile p : projectiles) {
+			if (p.ballonCreuve) {
+				r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+				if (r1.overlaps(r3)) {
+					ramasseProjectile(p);
+				}
 			}
 		}
 
@@ -540,7 +611,7 @@ public class WorldController extends InputAdapter {
 					d2 = Math.pow(level.personnage.position.x-f.position.x-1,2)+Math.pow(level.personnage.position.y-f.position.y,2);
 					//Distance GAUCHE
 					d4 = Math.pow(level.personnage.position.x-f.position.x+1,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
-					
+
 					if (d1<d2) {
 						if(d1<d4) {//On va en HAUT
 							f.vitesse.y = f.vitesseMax.y;
@@ -560,7 +631,7 @@ public class WorldController extends InputAdapter {
 							f.orientation = Fantome.ORIENTATION_FANTOME.GAUCHE;
 						}
 					}
-					
+
 					break;
 
 				case BAS:
@@ -570,7 +641,6 @@ public class WorldController extends InputAdapter {
 					d3 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
 					//Distance GAUCHE
 					d4 = Math.pow(level.personnage.position.x-f.position.x+1,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
-					System.out.println("DROIT:"+d2+" BAS:"+d3+" GAUCHE:"+d4+"\n");
 					if (d3<d2) {
 						if(d3<d4) {//On va en BAS
 							f.vitesse.y = -f.vitesseMax.y;
@@ -602,7 +672,7 @@ public class WorldController extends InputAdapter {
 						}
 						else {//On va à GAUCHE
 							f.vitesse.x = - f.vitesseMax.x;
-							
+
 						}
 					}
 					else {
@@ -612,7 +682,7 @@ public class WorldController extends InputAdapter {
 						}
 						else {//On va à GAUCHE
 							f.vitesse.x = - f.vitesseMax.x;
-							
+
 						}
 					}
 					break;
@@ -627,7 +697,7 @@ public class WorldController extends InputAdapter {
 						}
 						else {//On va à DROITE
 							f.vitesse.x = f.vitesseMax.x;
-							
+
 						}
 					}
 					else {
@@ -637,7 +707,7 @@ public class WorldController extends InputAdapter {
 						}
 						else {//On va à DROITE
 							f.vitesse.x = f.vitesseMax.x;
-							
+
 						}
 					}
 					break;

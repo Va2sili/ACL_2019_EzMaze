@@ -25,6 +25,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetMonstre monstre;
 	public AssetPoliceEcriture police;
 	public AssetCaisse caisse;
+	public AssetProjectile projectile;
 	
 
 
@@ -59,7 +60,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		carre = new AssetCase(atlas);
 		monstre =new AssetMonstre(atlas);
 		caisse = new AssetCaisse(atlas);
+		projectile = new AssetProjectile(atlas);
 		police = new AssetPoliceEcriture();
+		
 	}
 
 	/*
@@ -67,6 +70,13 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * les assets
 	 */
 
+	public class AssetProjectile{
+		public final AtlasRegion ballon;
+		
+		public AssetProjectile(TextureAtlas atlas) {
+			ballon = atlas.findRegion("BallonDeBasket");
+		}
+	}
 	public class AssetCaisse{
 		public final AtlasRegion caisse;
 		

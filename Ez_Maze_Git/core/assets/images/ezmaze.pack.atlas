@@ -53,3 +53,16 @@ victoire
   orig: 60, 60
   offset: 0, 0
   index: -1
+
+ezmaze.pack2.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+BallonDeBasket
+  rotate: false
+  xy: 2, 2
+  size: 317, 317
+  orig: 317, 317
+  offset: 0, 0
+  index: -1

@@ -39,7 +39,7 @@ public class Fantome extends AbstractGameObject {
 	
 	}
 
-	public void init(int x, int y) {
+	public void init(float x, float y) {
 		dimension.set(0.5f,0.5f);
 		regFantome = Assets.instance.monstre.fantome;
 	

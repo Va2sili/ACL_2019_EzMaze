@@ -105,6 +105,9 @@ public class PersonnagePrincipal extends AbstractGameObject {
 	public float getPdv() {
 		return POINTS_DE_VIE;
 	}
+	public void sommePdv(float n) {
+		POINTS_DE_VIE += n;
+	}
 	
 	//FIN DES METHODE D'ETAT DU PERSONNAGE
 

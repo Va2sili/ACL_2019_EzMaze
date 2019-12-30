@@ -17,6 +17,8 @@ import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse.ETAT_CAISSE;
 import com.mygdx.ezmaze.jeu.objects.Case;
+import com.mygdx.ezmaze.jeu.objects.Fantome;
+import com.mygdx.ezmaze.jeu.objects.Fantome.ORIENTATION_FANTOME;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
@@ -80,6 +82,7 @@ public class WorldController extends InputAdapter {
 	//depuis le dernier affichage de la fenêtre...
 	public void update (float deltaTime) {
 		handleMonster(deltaTime);
+		IaFantome();
 		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
 		//updateTestObjets(deltaTime);//CODE POUBELLE
 		handleInputGame(deltaTime);
@@ -333,9 +336,9 @@ public class WorldController extends InputAdapter {
 				r3.set(c.position.x,c.position.y-c.frontiere.height,c.frontiere.width,c.frontiere.height);
 				for (Mur mur : level.murs) {
 					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-					
+
 					if(r3.overlaps(r2)) {
-						
+
 						mouvementPossible = false;
 					}
 				}
@@ -343,9 +346,9 @@ public class WorldController extends InputAdapter {
 					Caisse c2 = level.caisses.get(i);
 					if (c2!=c) {
 						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
-						
+
 						if(r3.overlaps(r2)) {
-							
+
 							mouvementPossible = false;
 						}
 					}
@@ -364,9 +367,9 @@ public class WorldController extends InputAdapter {
 				r3.set(c.position.x,c.position.y,c.frontiere.width,c.frontiere.height+c.dimension.y);
 				for (Mur mur : level.murs) {
 					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-					
+
 					if(r3.overlaps(r2)) {
-						
+
 						mouvementPossible = false;
 					}
 				}
@@ -374,9 +377,9 @@ public class WorldController extends InputAdapter {
 					Caisse c2 = level.caisses.get(i);
 					if (c2!=c) {
 						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
-						
+
 						if(r3.overlaps(r2)) {
-							
+
 							mouvementPossible = false;
 						}
 					}
@@ -393,9 +396,9 @@ public class WorldController extends InputAdapter {
 				r3.set(c.position.x+c.dimension.x,c.position.y,c.frontiere.width,c.frontiere.height);
 				for (Mur mur : level.murs) {
 					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-					
+
 					if(r3.overlaps(r2)) {
-						
+
 						mouvementPossible = false;
 					}
 				}
@@ -403,9 +406,9 @@ public class WorldController extends InputAdapter {
 					Caisse c2 = level.caisses.get(i);
 					if (c2!=c) {
 						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
-						
+
 						if(r3.overlaps(r2)) {
-							
+
 							mouvementPossible = false;
 						}
 					}
@@ -422,9 +425,9 @@ public class WorldController extends InputAdapter {
 				r3.set(c.position.x-c.dimension.x,c.position.y,c.frontiere.width,c.frontiere.height);
 				for (Mur mur : level.murs) {
 					r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-					
+
 					if(r3.overlaps(r2)) {
-						
+
 						mouvementPossible = false;
 					}
 				}
@@ -432,9 +435,9 @@ public class WorldController extends InputAdapter {
 					Caisse c2 = level.caisses.get(i);
 					if (c2!=c) {
 						r2.set(c2.position.x,c2.position.y,c2.frontiere.width,c2.frontiere.height);
-						
+
 						if(r3.overlaps(r2)) {
-							
+
 							mouvementPossible = false;
 						}
 					}
@@ -511,14 +514,137 @@ public class WorldController extends InputAdapter {
 
 
 		//Test pour les collisions personnage <--> Monstre
-		/*
-		 * Non implémenté
-		 */
 
+		//Test pour les collisions personnage <--> Fantome
+		for (Fantome f : level.fantomes) {
+			r4.set(f.position.x,f.position.y,f.frontiere.width,f.frontiere.height);
+			if (r1.overlaps(r4)) {
+				level.personnage.sommePdv(-f.DEGATS_ATTAQUE);
+			}
+		}
 
 	}
 	//FIN DE CONTROLE DES COLLISIONS
 
+	//IA POUR LES MONSTRES
+	// IA FANTOMES
+	private void IaFantome() {
+		double d1,d2,d3,d4;
+		for (Fantome f : level.fantomes) {
+			if (f.etatCombat==Fantome.ETAT_COMBAT.RECHERCHE) {
+				switch (f.orientation) {
+				case HAUT:
+					//Distance HAUT
+					d1 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y-1,2);
+					//Distance DROIT
+					d2 = Math.pow(level.personnage.position.x-f.position.x-1,2)+Math.pow(level.personnage.position.y-f.position.y,2);
+					//Distance GAUCHE
+					d4 = Math.pow(level.personnage.position.x-f.position.x+1,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
+					
+					if (d1<d2) {
+						if(d1<d4) {//On va en HAUT
+							f.vitesse.y = f.vitesseMax.y;
+						}
+						else {//On va à GAUCHE
+							f.vitesse.x = - f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.GAUCHE;
+						}
+					}
+					else {
+						if (d2<d4) {//On va à DROITE
+							f.vitesse.x = f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.DROIT;
+						}
+						else {//On va à gauche
+							f.vitesse.x = - f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.GAUCHE;
+						}
+					}
+					
+					break;
+
+				case BAS:
+					//Distance DROIT
+					d2 = Math.pow(level.personnage.position.x-f.position.x-1,2)+Math.pow(level.personnage.position.y-f.position.y,2);
+					//Distance BAS
+					d3 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
+					//Distance GAUCHE
+					d4 = Math.pow(level.personnage.position.x-f.position.x+1,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);
+					System.out.println("DROIT:"+d2+" BAS:"+d3+" GAUCHE:"+d4+"\n");
+					if (d3<d2) {
+						if(d3<d4) {//On va en BAS
+							f.vitesse.y = -f.vitesseMax.y;
+						}
+						else {//On va à GAUCHE
+							f.vitesse.x = - f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.GAUCHE;
+						}
+					}
+					else {
+						if (d2<d4) {//On va à DROITE
+							f.vitesse.x = f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.DROIT;
+						}
+						else {//On va à GAUCHE
+							f.vitesse.x = - f.vitesseMax.x;
+							f.orientation = Fantome.ORIENTATION_FANTOME.GAUCHE;
+						}
+					}
+					break;
+				case GAUCHE:
+					d1 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y-1,2);//Distance HAUT
+					d3 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);//Distance BAS
+					d4 = Math.pow(level.personnage.position.x-f.position.x+1,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);//Distance GAUCHE
+					if (d1<d3) {
+						if(d1<d4) {//On va en HAUT
+							f.vitesse.y = f.vitesseMax.y;
+							f.orientation = Fantome.ORIENTATION_FANTOME.HAUT;
+						}
+						else {//On va à GAUCHE
+							f.vitesse.x = - f.vitesseMax.x;
+							
+						}
+					}
+					else {
+						if (d3<d4) {//On va à BAS
+							f.vitesse.y = -f.vitesseMax.y;
+							f.orientation = Fantome.ORIENTATION_FANTOME.BAS;
+						}
+						else {//On va à GAUCHE
+							f.vitesse.x = - f.vitesseMax.x;
+							
+						}
+					}
+					break;
+				case DROIT:
+					d1 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y-1,2);//Distance HAUT
+					d2 = Math.pow(level.personnage.position.x-f.position.x-1,2)+Math.pow(level.personnage.position.y-f.position.y,2);//Distance DROIT
+					d3 = Math.pow(level.personnage.position.x-f.position.x,2)+Math.pow(level.personnage.position.y-f.position.y+1,2);//Distance BAS
+					if (d1<d3) {
+						if(d1<d2) {//On va en HAUT
+							f.vitesse.y = f.vitesseMax.y;
+							f.orientation = Fantome.ORIENTATION_FANTOME.HAUT;
+						}
+						else {//On va à DROITE
+							f.vitesse.x = f.vitesseMax.x;
+							
+						}
+					}
+					else {
+						if (d3<d2) {//On va à BAS
+							f.vitesse.y = -f.vitesseMax.y;
+							f.orientation = Fantome.ORIENTATION_FANTOME.BAS;
+						}
+						else {//On va à DROITE
+							f.vitesse.x = f.vitesseMax.x;
+							
+						}
+					}
+					break;
+				}
+			}
+		}
+	}
 
 	public int getNbMonstres() {
 		int n = level.monstres.size;

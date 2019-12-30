@@ -102,9 +102,10 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public class AssetMonstre{
 		public final AtlasRegion monster;
-
+		public final AtlasRegion fantome;
 		public AssetMonstre(TextureAtlas atlas) {
 			monster = atlas.findRegion("monstre");
+			fantome = atlas.findRegion("ghost");
 		}
 	}
 	

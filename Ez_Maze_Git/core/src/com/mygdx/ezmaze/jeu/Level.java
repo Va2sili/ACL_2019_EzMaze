@@ -8,6 +8,7 @@ import com.mygdx.ezmaze.jeu.objects.AbstractGameObject;
 import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
 import com.mygdx.ezmaze.jeu.objects.Case;
+import com.mygdx.ezmaze.jeu.objects.Fantome;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
@@ -21,6 +22,7 @@ public class Level {
 		MUR_DE_PIERRE(255,255,255),//Du blanc
 		SPAWN_JOUEUR(255,0,0),//Du rouge
 		CASE_ARRIVEE(0,255,0),//Du vert
+		SPAWN_FANTOME(112,176,144),//Du verdatre
 		SPAWN_MONSTRE(255,242,0),//Du jaune
 		CAISSE(255,0,255),//Du magenta
 		PLACE_CAISSE(0,255,255);//Du cyan
@@ -47,6 +49,7 @@ public class Level {
 	public Array<Mur> murs;
 	public PersonnagePrincipal personnage;
 	public Array<Monstre> monstres;
+	public Array<Fantome> fantomes;
     public Case ezmaze;
     public Array<Caisse> caisses;
     public Array<ArriveeCaisse> arriveeCaisses;
@@ -63,16 +66,9 @@ public class Level {
         ezmaze=null;
 		//monstres
 		monstres= new Array<Monstre>();
+		fantomes = new Array<Fantome>();
 		caisses = new Array<Caisse>();
 		arriveeCaisses = new Array<ArriveeCaisse>();
-
-		System.out.println(" Empty :"+BLOCK_TYPE.EMPTY.getColor()
-		+"\n PIERRE :"+BLOCK_TYPE.MUR_DE_PIERRE.getColor()
-		+"\n JOUEUR :"+BLOCK_TYPE.SPAWN_JOUEUR.getColor()
-		+"\n ARRIVEE :"+BLOCK_TYPE.CASE_ARRIVEE.getColor()
-		+"\n MONSTRE :"+BLOCK_TYPE.SPAWN_MONSTRE.getColor()
-				);
-
 
 		//Chargement du fichier PNG de représentation du level
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
@@ -146,6 +142,12 @@ public class Level {
 					arriveeCaisses.add((ArriveeCaisse)obj);
 					
 				}
+				else if (BLOCK_TYPE.SPAWN_FANTOME.sameColor(pixelObserve)) {
+					obj = new Fantome(pixelX,-pixelY);
+					obj.position.set(pixelX,-pixelY);
+					fantomes.add((Fantome)obj);
+					
+				}
 
 				//Sinon c'est un objet inconnu
 				else {
@@ -196,6 +198,9 @@ public class Level {
 		for (ArriveeCaisse ac : arriveeCaisses) {
 			ac.render(batch);
 		}
+		for (Fantome f : fantomes) {
+			f.render(batch);
+		}
 		personnage.render(batch);
 
 	}
@@ -214,6 +219,9 @@ public class Level {
 		}
 		for (ArriveeCaisse ac : arriveeCaisses) {
 			ac.update(deltaTime);
+		}
+		for (Fantome f : fantomes) {
+			f.update(deltaTime);
 		}
 	}
 }

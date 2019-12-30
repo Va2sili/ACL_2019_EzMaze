@@ -20,7 +20,7 @@ public class RenderGUI {
 			float x  = -15;
 			float y = 125;
 			batch.draw(Assets.instance.thesee.personnage, x, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
-			Assets.instance.police.moyen.draw(batch, ""+worldController.level.personnage.getPdv(), x+75,y+37);
+			Assets.instance.police.moyen.draw(batch, ""+String.format("%.02f", worldController.level.personnage.getPdv()), x+75,y+37);
 		}
 	
 	

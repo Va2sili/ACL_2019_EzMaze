@@ -12,6 +12,7 @@ public class Case extends AbstractGameObject {
 	 * de différentes manières ?
 	 */
 	private TextureRegion CaseArrivee;
+	private TextureRegion CaseBoue;
 	
 	private int length;
 	
@@ -22,6 +23,7 @@ public class Case extends AbstractGameObject {
 	private void init() {
 		dimension.set(1,1);
 		CaseArrivee = Assets.instance.carre.EZCase;
+		CaseBoue=Assets.instance.CaseBoue.boue;
 		
 		//Début de la longueur
 		setLength(1);
@@ -52,9 +54,21 @@ public class Case extends AbstractGameObject {
 			relX+=dimension.x;
 			
 		}
-		
-		
 	}
+	public void render1(SpriteBatch batch) {
+		TextureRegion reg = null;//Si on finit par avoir plusieurs textures ça sera utile (cf. p186 du wiki)
+		float relX = 0;
+		float relY = 0;
+	
+	reg=CaseBoue;// Dessin pour la case boue
+		for (int i = 0; i < length; i++) {
+			batch.draw(reg.getTexture(), position.x+relX, position.y+relY, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);
+			relX+=dimension.x;
+			
+		}
+	}	
+		
+	
 	
 	@Override
 	public void update(float deltaTime) {

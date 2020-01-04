@@ -1,3 +1,5 @@
+
+
 package com.mygdx.ezmaze.jeu;
 
 import com.badlogic.gdx.Gdx;
@@ -23,6 +25,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetMur mur;
 	public AssetCase carre;//On ne peut pas utiliser le nom 'case'
 	public AssetMonstre monstre;
+	public AssetCaseBoue CaseBoue;
 	public AssetPoliceEcriture police;
 	public AssetCaisse caisse;
 	public AssetProjectile projectile;
@@ -59,6 +62,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		mur = new AssetMur(atlas);
 		carre = new AssetCase(atlas);
 		monstre =new AssetMonstre(atlas);
+		CaseBoue=new AssetCaseBoue(atlas);
 		caisse = new AssetCaisse(atlas);
 		projectile = new AssetProjectile(atlas);
 		police = new AssetPoliceEcriture();
@@ -118,7 +122,12 @@ public class Assets implements Disposable, AssetErrorListener {
 			fantome = atlas.findRegion("ghost");
 		}
 	}
-	
+	public class AssetCaseBoue{
+		public final AtlasRegion boue;
+		public AssetCaseBoue(TextureAtlas atlas) {
+			boue=atlas.findRegion("boue");
+		}
+	}
 	public class AssetPoliceEcriture{
 		public final BitmapFont petit;
 		public final BitmapFont moyen;
@@ -126,9 +135,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		
 		public AssetPoliceEcriture() {
 			//On va créer les polices dont on se servira dans le jeu
-			petit = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
-			moyen = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
-			gros = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
+			petit = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			moyen = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			gros = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
 			
 			//Pour chaque, reste à définir une taille d'affichage
 			petit.getData().setScale(0.75f);

@@ -92,11 +92,13 @@ public class WorldController extends InputAdapter {
 	//Le delta time permettra d'actualiser correctement en fonction du temps écoulé
 	//depuis le dernier affichage de la fenêtre...
 	public void update (float deltaTime) {
+		if(resurections>0) {
 		IaMonstre();
 		IaFantome();
 		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
 		handleInputGame(deltaTime);
-
+		resurectiondupersonnage();
+		}
 		//Udpdate des projectiles !
 		for (Projectile p : projectiles) {
 			p.update(deltaTime);
@@ -253,13 +255,25 @@ public class WorldController extends InputAdapter {
 
 		}
 	}
+	private void collisionPersonnagecaseboue(Case caseboue) {
+		//dès qu'il arrive sur la caseboue on réduit sa vitesse pendant 3 secondes
+		float a=0;
+		PersonnagePrincipal personnage = level.personnage;
+		float differenceH = personnage.position.x-(caseboue.position.x);
+		if (Math.abs(differenceH)<1.0f)  {
+			a= Gdx.graphics.getDeltaTime();
+level.personnage.vitesse.x=(float) (level.personnage.vitesseMax.x-0.05);
+level.personnage.vitesse.y=(float) (level.personnage.vitesseMax.x-0.05);
+
+		}
+	
+	}
 	private void collisionPersonnageMonstre() {
 		/*
 		 * Non implémenté
 		 */
 	};
-
-	private void collisionCaisseMur(Caisse c) {
+private void collisionCaisseMur(Caisse c) {
 		PersonnagePrincipal personnage = level.personnage;
 		switch (personnage.orientation) {
 		case HAUT:
@@ -515,7 +529,11 @@ public class WorldController extends InputAdapter {
 		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
 			collisionPersonnageEzCase(level.ezmaze);}
-
+//test collision personnage case boue
+		r2.set(level.caseboue.position.x,level.caseboue.position.y,level.caseboue.frontiere.width,level.caseboue.frontiere.height);
+		if(r1.overlaps(r2)) {
+			//collisionPersonnagecaseboue(level.caseboue);
+			}
 
 		//Test pour les collisions personnage <--> Monstre
 
@@ -1160,6 +1178,15 @@ public class WorldController extends InputAdapter {
 			Gdx.app.debug(TAG,"On suit avec la caméra : "+cameraHelper.hasTarget());
 		}
 		return false;
+	}
+
+	private void resurectiondupersonnage() {
+			if(level.personnage.getPdv()<=0) {
+				resurections=resurections-1;
+				PersonnagePrincipal.setPOINTS_DE_VIE(3);
+				keyUp(Keys.R);
+			}
+	
 	}
 
 

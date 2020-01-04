@@ -13,6 +13,12 @@ public class PersonnagePrincipal extends AbstractGameObject {
 	public static final String TAG = PersonnagePrincipal.class.getName();
 
 	private static float POINTS_DE_VIE = 3;
+	
+
+	public static void setPOINTS_DE_VIE(float pOINTS_DE_VIE) {
+		POINTS_DE_VIE = pOINTS_DE_VIE;
+	}
+
 	private static float DEGATS_ATTAQUE = 1f;
 	private Pixmap pixmapAttaque;
 

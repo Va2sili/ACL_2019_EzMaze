@@ -6,35 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 Caisse
   rotate: false
-  xy: 846, 945
+  xy: 846, 815
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 Mur
   rotate: false
-  xy: 846, 883
+  xy: 846, 753
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 PlaceArrivee
   rotate: false
-  xy: 908, 945
+  xy: 908, 815
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 boue
   rotate: false
-  xy: 846, 821
-  size: 60, 60
-  orig: 60, 60
+  xy: 846, 877
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 ghost
   rotate: false
-  xy: 846, 772
+  xy: 908, 766
   size: 55, 47
   orig: 55, 47
   offset: 0, 0
@@ -48,14 +48,14 @@ monstre
   index: -1
 personnage
   rotate: false
-  xy: 970, 959
+  xy: 976, 959
   size: 17, 46
   orig: 17, 46
   offset: 0, 0
   index: -1
 victoire
   rotate: false
-  xy: 908, 883
+  xy: 846, 691
   size: 60, 60
   orig: 60, 60
   offset: 0, 0

@@ -56,7 +56,7 @@ public class Monstre extends AbstractGameObject {
 		frontiere.set(0,0,dimension.x,dimension.y);
 		//Valeurs de mobilite
 		vitesseMax.set(1,1);
-		frottement.set(1,1);
+		frottement.set(0.5f,0.5f);
 		/*
 		 * On donne une grande valeur aux frottements pour éviter toute glissade
 		 * incontrôlée...
@@ -71,7 +71,7 @@ public class Monstre extends AbstractGameObject {
 		armeUtilisee = ARME_UTILISEE.NONE;
 		etatCombat = ETAT_COMBAT.RECHERCHE;
 		orientation = ORIENTATION_MONSTRE.GAUCHE;
-		marche=true;
+		marche=false;
 		timeSinceCollision=0;
 	};
 
@@ -105,11 +105,13 @@ public class Monstre extends AbstractGameObject {
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 
-		timeSinceCollision+=deltaTime;
-
+		
+		System.out.println("TIME :"+timeSinceCollision);
 		if(timeSinceCollision > 1f) {
+			timeSinceCollision+=deltaTime;
 			marche=false;
 			timeSinceCollision=0;
+			
 		}
 
 

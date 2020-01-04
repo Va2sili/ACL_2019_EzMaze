@@ -678,6 +678,7 @@ public class WorldController extends InputAdapter {
 		for (Monstre m : level.monstres) {
 
 			if (m.etatCombat==Monstre.ETAT_COMBAT.RECHERCHE && !m.marche) {
+				m.marche = true;
 
 				List<float[][]> differences = new ArrayList<float[][]>(); //liste contenant les diff horizont et vert des murs adjacents aux monstres
 

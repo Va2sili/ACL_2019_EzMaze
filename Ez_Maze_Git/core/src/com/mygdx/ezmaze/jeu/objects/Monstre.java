@@ -3,8 +3,10 @@ package com.mygdx.ezmaze.jeu.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.ezmaze.jeu.Assets;
+import com.mygdx.ezmaze.jeu.objects.Fantome.ORIENTATION_FANTOME;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ARME_UTILISEE;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ETAT_COMBAT;
+import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ORIENTATION_PERSONNAGE;
 
 public class Monstre extends AbstractGameObject {
 	public static final String TAG = Monstre.class.getName();
@@ -12,7 +14,8 @@ public class Monstre extends AbstractGameObject {
 	private static float POINTS_DE_VIE = 2;
 	private static float DEGATS_ATTAQUE = 1f;
 	public TextureRegion regMonstre;
-
+	public boolean marche;
+	public float timeSinceCollision;
 	/*
 	 * Ici on pourra ajouter autant d'attributs que nécessaire pour les bonus
 	 * comme pour les malus.
@@ -27,27 +30,33 @@ public class Monstre extends AbstractGameObject {
 	public enum ARME_UTILISEE{
 		NONE,AXE,KNIFE;
 	}
+
+	public enum ORIENTATION_MONSTRE{
+		GAUCHE,DROITE,HAUT,BAS;
+	}
+
 	public ARME_UTILISEE armeUtilisee;
 	public ETAT_COMBAT etatCombat;
+	public ORIENTATION_MONSTRE orientation;
 	public boolean attaque;
-	
+
 	public Monstre() {
 		init();
-	
+
 	}
 
 	public void init() {
 		dimension.set(1,1);
 		regMonstre = Assets.instance.monstre.monster;
-	//	System.out.println(regMonstre==null);
-		
+		//	System.out.println(regMonstre==null);
+
 		//Centrer l'origine de l'image
 		origin.set(dimension.x/2, dimension.y/2);
 		//Paramétrage des frontières
 		frontiere.set(0,0,dimension.x,dimension.y);
 		//Valeurs de mobilite
-		vitesseMax.set(3,3);
-		frottement.set(10,10);
+		vitesseMax.set(1,1);
+		frottement.set(1,1);
 		/*
 		 * On donne une grande valeur aux frottements pour éviter toute glissade
 		 * incontrôlée...
@@ -61,7 +70,9 @@ public class Monstre extends AbstractGameObject {
 		//Mise à jour des attributs d'état du personnage
 		armeUtilisee = ARME_UTILISEE.NONE;
 		etatCombat = ETAT_COMBAT.RECHERCHE;
-
+		orientation = ORIENTATION_MONSTRE.GAUCHE;
+		marche=true;
+		timeSinceCollision=0;
 	};
 
 
@@ -93,6 +104,15 @@ public class Monstre extends AbstractGameObject {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
+
+		timeSinceCollision+=deltaTime;
+
+		if(timeSinceCollision > 1f) {
+			marche=false;
+			timeSinceCollision=0;
+		}
+
+
 		switch(armeUtilisee) {
 		case AXE: //Le monstre porte une hache
 			//DEGATS_ATTAQUE=3f;
@@ -133,8 +153,8 @@ public class Monstre extends AbstractGameObject {
 		super.updateMvtX(deltaTime);
 
 	}
-	
-	
+
+
 
 	@Override
 	public void render(SpriteBatch batch) {

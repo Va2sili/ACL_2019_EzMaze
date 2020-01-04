@@ -3,6 +3,11 @@ package com.mygdx.ezmaze.jeu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -13,7 +18,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.utils.Array;
+
 import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse.ETAT_CAISSE;
@@ -85,7 +92,7 @@ public class WorldController extends InputAdapter {
 	//Le delta time permettra d'actualiser correctement en fonction du temps écoulé
 	//depuis le dernier affichage de la fenêtre...
 	public void update (float deltaTime) {
-		handleMonster(deltaTime);
+		IaMonstre();
 		IaFantome();
 		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
 		handleInputGame(deltaTime);
@@ -180,10 +187,10 @@ public class WorldController extends InputAdapter {
 					Projectile p = new Projectile(level.personnage.position.x+level.personnage.origin.x, level.personnage.position.y+level.personnage.origin.y, dx, dy);
 					projectiles.add(p);
 				}
-				
-				
-				
-				}
+
+
+
+			}
 			else {
 				level.personnage.pousse=false;
 				level.personnage.setAttaque(false);
@@ -191,59 +198,7 @@ public class WorldController extends InputAdapter {
 		}
 	}
 
-	private void handleMonster (float deltaTime) {
 
-		//EN COURS D'IMPLEMENTATION
-
-		//Mouvements du monstre
-		//		int a=(int)(Math.random()*10);
-		//
-		//			level.monstre.vitesse.x = -level.monstre.vitesseMax.x;
-		//				if(a%3==0) level.monstre.vitesse.x = level.monstre.vitesseMax.x;
-		//				if(a%5==0) level.monstre.vitesse.y = level.monstre.vitesseMax.y;
-		//			level.monstre.vitesse.y = -level.monstre.vitesseMax.y;
-
-		/*for (Mur mur : level.murs) {
-			float differenceVerticale = level.monstre.position.y-(mur.position.y);
-			float differenceHorizontale = level.monstre.position.x-(mur.position.x);
-
-			System.out.println("diff verticale: "+Math.abs(differenceVerticale));
-			if (Math.abs(differenceVerticale) < 1.0f && differenceVerticale<=0) {
-				level.monstre.vitesse.y = -level.monstre.vitesseMax.y;
-			}			
-
-			if (Math.abs(differenceVerticale) < 1.0f && differenceVerticale>=0) {
-				level.monstre.vitesse.y = level.monstre.vitesseMax.y;
-			}
-			System.out.println("diff horizontale: "+differenceHorizontale);
-			if (Math.abs(differenceHorizontale) < 1.0f && differenceHorizontale<=0)  {
-				level.monstre.vitesse.x = -level.monstre.vitesseMax.x;
-			}
-			if (Math.abs(differenceHorizontale) < 1.0f && differenceHorizontale>=0) {
-				level.monstre.vitesse.x = level.monstre.vitesseMax.x;
-			}
-
-
-		}
-
-
-
-
-
-
-
-		for (Mur mur : level.murs) {
-			r2.set(mur.position.x,mur.position.y,mur.frontiere.width,mur.frontiere.height);
-			if(!r1.overlaps(r2) && !r3.overlaps(r2)) continue;
-			collisionPersonnageMur(mur);
-			collisionMonstreMur(mur);
-		}*/
-
-
-		//ATTAQUE
-		//A IMPLEMENTER
-
-	}
 
 	//Contrôle des collisions
 	private Rectangle r1 = new Rectangle();
@@ -564,7 +519,7 @@ public class WorldController extends InputAdapter {
 
 		//Test pour les collisions personnage <--> Monstre
 
-		
+
 		for (Fantome f : level.fantomes) {
 			//Test pour les collisions personnage <--> Fantome
 			r4.set(f.position.x,f.position.y,f.frontiere.width,f.frontiere.height);
@@ -583,7 +538,7 @@ public class WorldController extends InputAdapter {
 				}
 			}
 		}
-		
+
 		//Collision Personnage - Ballon creuvé
 		for (Projectile p : projectiles) {
 			if (p.ballonCreuve) {
@@ -716,10 +671,483 @@ public class WorldController extends InputAdapter {
 		}
 	}
 
+	private void IaMonstre() {
+
+		//Mouvements du monstre
+		//System.out.println(level.murs.size);
+		for (Monstre m : level.monstres) {
+
+			if (m.etatCombat==Monstre.ETAT_COMBAT.RECHERCHE && !m.marche) {
+
+				List<float[][]> differences = new ArrayList<float[][]>(); //liste contenant les diff horizont et vert des murs adjacents aux monstres
+
+				for (Mur mur : level.murs) {
+					float differenceVerticale = m.position.y-(mur.position.y);
+					float differenceHorizontale = m.position.x-(mur.position.x);
+
+					if(Math.abs(differenceVerticale)<=1 && Math.abs(differenceHorizontale)<=1 && Math.abs(differenceVerticale)!=Math.abs(differenceHorizontale)) { //choix des murs adjacents uniquement
+						float[][]diff=new float[2][1];
+						diff[0][0]=differenceVerticale;
+						diff[1][0]=differenceHorizontale;
+
+						differences.add(diff);
+					}
+				}
+
+				for(float[][]i:differences) {
+					System.out.println(Arrays.toString(i[0])+" "+Arrays.toString(i[1]));
+				}
+				System.out.println(m.orientation);
+
+
+				float[][]droite=new float[2][1];
+				droite[0][0]=0f;
+				droite[1][0]=-1f;
+
+				float[][]gauche=new float[2][1];
+				gauche[0][0]=0f;
+				gauche[1][0]=1f;
+
+				float[][]haut=new float[2][1];
+				haut[0][0]=-1f;
+				haut[1][0]=0f;
+
+				float[][]bas=new float[2][1];
+				bas[0][0]=1f;
+				bas[1][0]=0f;
+
+				int n=differences.size();
+				boolean[] config=new boolean[6];		
+				config[0]=false;
+				config[1]=false;
+				config[2]=false;
+				config[3]=false;
+				config[4]=false;
+				config[5]=false;
+
+				if(n==3) {		//config 1 |-_	config 2 |-| config3 -_| config4 |_|
+					if(differences.get(0)[0][0]==-1 && differences.get(1)[1][0]==1 && differences.get(2)[1][0]==0) config[0]=true;
+					else if(differences.get(0)[0][0]==-1 && differences.get(1)[1][0]==1 && differences.get(2)[1][0]==-1) config[1]=true;
+					else if(differences.get(0)[0][0]==-1 && differences.get(1)[1][0]==-1) config[2]=true;
+					else config[3]=true;
+				}
+
+				if(n==2) {		//config 1 |-	config 2 -|	config3 _|	config4 |_	config5 | |	config6 -_
+					if(differences.get(0)[0][0]==-1 && differences.get(1)[1][0]==1) config[0]=true;
+					else if(differences.get(0)[0][0]==-1 && differences.get(1)[1][0]==-1) config[1]=true;
+					else if(differences.get(0)[0][0]==-1) config[5]=true;
+					else if(differences.get(0)[1][0]==1 && differences.get(1)[1][0]==-1) config[4]=true;
+					else if(differences.get(0)[1][0]==1) config[3]=true;
+					else config[2]=true;
+				}
+
+				if(n==1) {		//config 1 -	config 2 |. config3 .| config4 _
+					if(differences.get(0)[0][0]==-1) config[0]=true;
+					else if(differences.get(0)[1][0]==1) config[1]=true;
+					else if(differences.get(0)[1][0]==-1) config[2]=true;
+					else config[3]=true;
+				}
+				System.out.println(Arrays.toString(config));
+
+				switch (m.orientation) {
+				case HAUT:
+					//Distance HAUT
+					if (n==3) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							DelayAction w = new DelayAction(10f);
+							w.act(10f);
+							m.position.x--; 
+
+							//m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.y++;
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+					}
+
+					if (n==2) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[2]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[3]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[4]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[5]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+					}
+
+					if (n==1) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[2]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[3]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+					}
+
+					break;
+
+				case BAS:
+					//Distance DROIT
+					if (n==3) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+					}
+
+					if (n==2) {
+						if(config[0]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.x--;
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[4]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[5]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+					}
+
+					if (n==1) {
+						if(config[0]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.x--;
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+					}
+					break;
+				case GAUCHE:
+					if (n==3) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.x--;
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+					}
+
+					if (n==2) {
+						if(config[0]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[1]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[2]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[4]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[5]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+					}
+
+					if (n==1) {
+						if(config[0]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[1]) {
+							//m.position.y++;
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[2]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[3]) {
+							//m.position.y++;
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+					}
+					break;
+				case DROITE:
+					if (n==3) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
+						}
+
+						else if(config[3]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+					}
+
+					if (n==2) {
+						if(config[0]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[1]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.y++; 
+							m.vitesse.y=m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
+						}
+
+						else if(config[3]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+						else if(config[4]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[5]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+
+					}
+
+					if (n==1) {
+						if(config[0]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[1]) {
+							//m.position.y--;
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[2]) {
+							//m.position.y--; 
+							m.vitesse.y=-m.vitesseMax.y;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
+						}
+
+						else if(config[3]) {
+							//m.position.x++; 
+							m.vitesse.x=m.vitesseMax.x;
+							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
+						}
+					}
+					break;
+				}
+				System.out.println(m.orientation);
+				System.out.println();
+
+			}
+
+		}
+	}
+
+
+
 	public int getNbMonstres() {
 		int n = level.monstres.size;
 		return n;
 	}
+
+
+
 
 	@Override
 	public boolean keyUp (int keycode) {

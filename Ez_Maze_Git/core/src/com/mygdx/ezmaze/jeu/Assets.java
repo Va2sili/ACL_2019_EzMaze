@@ -126,9 +126,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		
 		public AssetPoliceEcriture() {
 			//On va créer les polices dont on se servira dans le jeu
-			petit = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
-			moyen = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
-			gros = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
+			petit = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
+			moyen = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
+			gros = new BitmapFont(Gdx.files.internal("../core/assets/images/PoliceEzMaze.fnt"),true);
 			
 			//Pour chaque, reste à définir une taille d'affichage
 			petit.getData().setScale(0.75f);

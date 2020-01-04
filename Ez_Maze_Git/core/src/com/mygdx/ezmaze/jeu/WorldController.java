@@ -755,26 +755,26 @@ public class WorldController extends InputAdapter {
 					//Distance HAUT
 					if (n==3) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.y++;
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++;
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
@@ -782,38 +782,38 @@ public class WorldController extends InputAdapter {
 
 					if (n==2) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[2]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[3]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[4]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[5]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
@@ -821,26 +821,26 @@ public class WorldController extends InputAdapter {
 
 					if (n==1) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[2]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[3]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
@@ -852,26 +852,26 @@ public class WorldController extends InputAdapter {
 					//Distance DROIT
 					if (n==3) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
@@ -879,38 +879,38 @@ public class WorldController extends InputAdapter {
 
 					if (n==2) {
 						if(config[0]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--;
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--;
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[4]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[5]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
@@ -918,26 +918,26 @@ public class WorldController extends InputAdapter {
 
 					if (n==1) {
 						if(config[0]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.x--;
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--;
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 					}
@@ -945,26 +945,26 @@ public class WorldController extends InputAdapter {
 				case GAUCHE:
 					if (n==3) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--;
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--;
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
@@ -972,38 +972,38 @@ public class WorldController extends InputAdapter {
 
 					if (n==2) {
 						if(config[0]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[1]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[2]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[4]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[5]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
@@ -1011,26 +1011,26 @@ public class WorldController extends InputAdapter {
 
 					if (n==1) {
 						if(config[0]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[1]) {
-							//m.position.y++;
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++;
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[2]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[3]) {
-							//m.position.y++;
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++;
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 					}
@@ -1038,26 +1038,26 @@ public class WorldController extends InputAdapter {
 				case DROITE:
 					if (n==3) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.x--; 
-							m.vitesse.x=-m.vitesseMax.x;
+							m.position.x--; 
+							//m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 
 						else if(config[3]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
@@ -1065,38 +1065,38 @@ public class WorldController extends InputAdapter {
 
 					if (n==2) {
 						if(config[0]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[1]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.y++; 
-							m.vitesse.y=m.vitesseMax.y;
+							m.position.y++; 
+							//m.vitesse.y=m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.HAUT;
 						}
 
 						else if(config[3]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
 						else if(config[4]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[5]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 
@@ -1104,26 +1104,26 @@ public class WorldController extends InputAdapter {
 
 					if (n==1) {
 						if(config[0]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[1]) {
-							//m.position.y--;
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--;
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[2]) {
-							//m.position.y--; 
-							m.vitesse.y=-m.vitesseMax.y;
+							m.position.y--; 
+							//m.vitesse.y=-m.vitesseMax.y;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.BAS;
 						}
 
 						else if(config[3]) {
-							//m.position.x++; 
-							m.vitesse.x=m.vitesseMax.x;
+							m.position.x++; 
+							//m.vitesse.x=m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.DROITE;
 						}
 					}

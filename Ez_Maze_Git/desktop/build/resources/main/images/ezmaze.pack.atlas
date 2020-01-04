@@ -1,0 +1,68 @@
+
+ezmaze.pack.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Caisse
+  rotate: false
+  xy: 846, 945
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+Mur
+  rotate: false
+  xy: 846, 883
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+PlaceArrivee
+  rotate: false
+  xy: 908, 945
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+ghost
+  rotate: false
+  xy: 908, 896
+  size: 55, 47
+  orig: 55, 47
+  offset: 0, 0
+  index: -1
+monstre
+  rotate: false
+  xy: 2, 2
+  size: 842, 1003
+  orig: 842, 1003
+  offset: 0, 0
+  index: -1
+personnage
+  rotate: false
+  xy: 970, 959
+  size: 17, 46
+  orig: 17, 46
+  offset: 0, 0
+  index: -1
+victoire
+  rotate: false
+  xy: 846, 821
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+
+ezmaze.pack2.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+BallonDeBasket
+  rotate: false
+  xy: 2, 2
+  size: 317, 317
+  orig: 317, 317
+  offset: 0, 0
+  index: -1

@@ -104,11 +104,9 @@ public class Monstre extends AbstractGameObject {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-
-		
-		System.out.println("TIME :"+timeSinceCollision);
+		timeSinceCollision+=deltaTime;
 		if(timeSinceCollision > 1f) {
-			timeSinceCollision+=deltaTime;
+			
 			marche=false;
 			timeSinceCollision=0;
 			

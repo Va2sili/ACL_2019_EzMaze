@@ -766,11 +766,8 @@ public class WorldController extends InputAdapter {
 						}
 
 						else if(config[2]) {
-							DelayAction w = new DelayAction(10f);
-							w.act(10f);
-							m.position.x--; 
-
-							//m.vitesse.x=-m.vitesseMax.x;
+							//m.position.x--; 
+							m.vitesse.x=-m.vitesseMax.x;
 							m.orientation=Monstre.ORIENTATION_MONSTRE.GAUCHE;
 						}
 

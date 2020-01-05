@@ -11,6 +11,13 @@ Caisse
   orig: 60, 60
   offset: 0, 0
   index: -1
+Heart
+  rotate: false
+  xy: 970, 973
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 Mur
   rotate: false
   xy: 846, 883
@@ -48,7 +55,7 @@ monstre
   index: -1
 personnage
   rotate: false
-  xy: 970, 959
+  xy: 908, 835
   size: 17, 46
   orig: 17, 46
   offset: 0, 0

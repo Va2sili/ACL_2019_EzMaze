@@ -90,9 +90,11 @@ public class Assets implements Disposable, AssetErrorListener {
 	}
 	public class AssetThesee{
 		public final AtlasRegion personnage;
+		public final AtlasRegion coeurResu;
 
 		public AssetThesee (TextureAtlas atlas) {
 			personnage = atlas.findRegion("personnage");
+			coeurResu = atlas.findRegion("Heart");
 		}
 	}
 

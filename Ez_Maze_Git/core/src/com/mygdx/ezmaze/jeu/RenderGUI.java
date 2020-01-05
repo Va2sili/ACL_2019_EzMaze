@@ -60,4 +60,13 @@ public class RenderGUI {
 		timePolice.draw(batch,"GAME OVER !",x,y);
 		timePolice.setColor(1,1,1,1);
 	}
+	
+	public static void renderCoeurResu(SpriteBatch batch, WorldController worldController) {
+		float x = -30;
+		float y = 400;
+		for (int i = 0; i<worldController.resurections; i++) {
+			
+			batch.draw(Assets.instance.thesee.coeurResu, x+i*25, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
+		}
+	}
 }

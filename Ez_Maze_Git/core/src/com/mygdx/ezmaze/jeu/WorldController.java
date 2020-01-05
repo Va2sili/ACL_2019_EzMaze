@@ -257,14 +257,9 @@ public class WorldController extends InputAdapter {
 	}
 	private void collisionPersonnagecaseboue(Case caseboue) {
 		//dès qu'il arrive sur la caseboue on réduit sa vitesse pendant 3 secondes
-		float a=0;
-		PersonnagePrincipal personnage = level.personnage;
-		float differenceH = personnage.position.x-(caseboue.position.x);
-		if (Math.abs(differenceH)<1.0f)  {
+		level.personnage.frottement.set(100,100);
 
-level.personnage.frottement.set(12,12);
-
-		}
+		
 	
 	}
 	private void collisionPersonnageMonstre() {
@@ -528,11 +523,16 @@ private void collisionCaisseMur(Caisse c) {
 		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
 			collisionPersonnageEzCase(level.ezmaze);}
-//test collision personnage case boue
+		//test collision personnage case boue
 		r2.set(level.caseboue.position.x,level.caseboue.position.y,level.caseboue.frontiere.width,level.caseboue.frontiere.height);
+		boolean onBoue = false;
 		if(r1.overlaps(r2)) {
+			onBoue = true;
 			collisionPersonnagecaseboue(level.caseboue);
 			}
+		if(!onBoue) {
+			level.personnage.frottement.set(10,10);
+		}
 
 		//Test pour les collisions personnage <--> Monstre
 

@@ -54,7 +54,7 @@ public class WorldController extends InputAdapter {
 	public Level level;
 	public Array<Projectile> projectiles;
 	public int numLevel=0;
-	public int resurections=3;
+	public int resurections=Constantes.RESU_INIT;
 	public int score;
 
 	private void initLevel() {
@@ -97,7 +97,7 @@ public class WorldController extends InputAdapter {
 		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
 		handleInputGame(deltaTime);
 		resurectiondupersonnage();
-		}
+		
 		//Udpdate des projectiles !
 		for (Projectile p : projectiles) {
 			p.update(deltaTime);
@@ -105,6 +105,7 @@ public class WorldController extends InputAdapter {
 
 		level.update(deltaTime);
 		testCollision();
+		}
 		cameraHelper.update(deltaTime);
 	}
 

@@ -26,5 +26,5 @@ public class Constantes {
 	public static final float VIEWPORT_GUI_HEIGHT = 5.0f;
 	
 	//NOMBRE DE RESURECTIONS INITIALES
-	public static final int RESU_INIT = 3;
+	public static final int RESU_INIT = 1;
 }

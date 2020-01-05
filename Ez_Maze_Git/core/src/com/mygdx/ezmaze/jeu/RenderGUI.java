@@ -51,4 +51,13 @@ public class RenderGUI {
 		timePolice.draw(batch, ""+s, x+75,y+37);
 		timePolice.setColor(1,1,1,1);
 	}
+	
+	public static void renderGameOver(SpriteBatch batch) {
+		float x  = 200;
+		float y = 200;
+		BitmapFont timePolice = Assets.instance.police.gros;
+		timePolice.setColor(1,0.3f,0,1);
+		timePolice.draw(batch,"GAME OVER !",x,y);
+		timePolice.setColor(1,1,1,1);
+	}
 }

@@ -54,7 +54,7 @@ public class WorldController extends InputAdapter {
 	public Level level;
 	public Array<Projectile> projectiles;
 	public int numLevel=0;
-	public int resurections;
+	public int resurections=3;
 	public int score;
 
 	private void initLevel() {
@@ -79,7 +79,6 @@ public class WorldController extends InputAdapter {
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		//initTestObjets(); //CODE POUBELLE
-		resurections = Constantes.RESU_INIT;
 		temps = 0;
 		initLevel();
 	}
@@ -261,9 +260,8 @@ public class WorldController extends InputAdapter {
 		PersonnagePrincipal personnage = level.personnage;
 		float differenceH = personnage.position.x-(caseboue.position.x);
 		if (Math.abs(differenceH)<1.0f)  {
-			a= Gdx.graphics.getDeltaTime();
-level.personnage.vitesse.x=(float) (level.personnage.vitesseMax.x-0.05);
-level.personnage.vitesse.y=(float) (level.personnage.vitesseMax.x-0.05);
+
+level.personnage.frottement.set(12,12);
 
 		}
 	
@@ -532,7 +530,7 @@ private void collisionCaisseMur(Caisse c) {
 //test collision personnage case boue
 		r2.set(level.caseboue.position.x,level.caseboue.position.y,level.caseboue.frontiere.width,level.caseboue.frontiere.height);
 		if(r1.overlaps(r2)) {
-			//collisionPersonnagecaseboue(level.caseboue);
+			collisionPersonnagecaseboue(level.caseboue);
 			}
 
 		//Test pour les collisions personnage <--> Monstre

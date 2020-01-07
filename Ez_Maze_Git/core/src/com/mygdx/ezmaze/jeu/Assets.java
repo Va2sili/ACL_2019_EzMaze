@@ -29,7 +29,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetPoliceEcriture police;
 	public AssetCaisse caisse;
 	public AssetProjectile projectile;
-	
+	public AssetArmeLancee armelancee;
+
 
 
 
@@ -65,8 +66,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		CaseBoue=new AssetCaseBoue(atlas);
 		caisse = new AssetCaisse(atlas);
 		projectile = new AssetProjectile(atlas);
+		armelancee = new AssetArmeLancee(atlas);
 		police = new AssetPoliceEcriture();
-		
+
 	}
 
 	/*
@@ -76,14 +78,26 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public class AssetProjectile{
 		public final AtlasRegion ballon;
-		
+
 		public AssetProjectile(TextureAtlas atlas) {
 			ballon = atlas.findRegion("BallonDeBasket");
+
 		}
 	}
+
+	public class AssetArmeLancee{
+		public final AtlasRegion fireball;
+
+		public AssetArmeLancee(TextureAtlas atlas) {
+			fireball = atlas.findRegion("Fireball");
+
+		}
+	}
+
+
 	public class AssetCaisse{
 		public final AtlasRegion caisse;
-		
+
 		public AssetCaisse(TextureAtlas atlas) {
 			caisse = atlas.findRegion("Caisse");
 		}
@@ -134,18 +148,18 @@ public class Assets implements Disposable, AssetErrorListener {
 		public final BitmapFont petit;
 		public final BitmapFont moyen;
 		public final BitmapFont gros;
-		
+
 		public AssetPoliceEcriture() {
 			//On va créer les polices dont on se servira dans le jeu
 			petit = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
 			moyen = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
 			gros = new BitmapFont(Gdx.files.internal("images/PoliceEzMaze.fnt"),true);
-			
+
 			//Pour chaque, reste à définir une taille d'affichage
 			petit.getData().setScale(0.75f);
 			moyen.getData().setScale(1.0f);
 			gros.getData().setScale(2.0f);
-			
+
 			//Et on applique un filtre anti pixelisation
 			petit.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			moyen.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);

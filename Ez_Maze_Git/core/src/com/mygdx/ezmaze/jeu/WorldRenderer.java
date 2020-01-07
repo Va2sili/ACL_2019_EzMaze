@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.ezmaze.jeu.objects.projectiles.ArmeLancee;
 import com.mygdx.ezmaze.jeu.objects.projectiles.Projectile;
 
 import ezmaze.util.Constantes;
@@ -23,9 +24,9 @@ public class WorldRenderer implements Disposable {
 	//Cette référence est nécessaire puisque c'est le controleur qui rassemble les 
 	//informations utiles pour l'affichage (ou sont les objets, combiens il y en a,...)
 	private WorldController worldController;
-	
-	
-	
+
+
+
 	public WorldRenderer (WorldController worldController) {
 		this.worldController = worldController;//On accède aux informations importantes
 		init();
@@ -42,15 +43,15 @@ public class WorldRenderer implements Disposable {
 		cameraGUI.setToOrtho(true);//Inversion de l'axe vertical
 		cameraGUI.update();
 	}
-	
+
 	//Contiendra la logique d'affichage des objets du jeu (ordre d'affichage, layers, ...)
 	public void render() {
 		renderWorld(batch);
 		renderGui(batch);
 	};
-	
 
-	
+
+
 	private void renderWorld (SpriteBatch batch) {
 		worldController.cameraHelper.applyTo(camera);
 		batch.setProjectionMatrix(camera.combined);
@@ -59,9 +60,12 @@ public class WorldRenderer implements Disposable {
 		for (Projectile p : worldController.projectiles) {
 			p.render(batch);
 		}
+		for (ArmeLancee a : worldController.armeslancees) {
+			a.render(batch);
+		}
 		batch.end();
 	}
-	
+
 	private void renderGui(SpriteBatch batch) {
 		batch.setProjectionMatrix(cameraGUI.combined);
 		batch.begin();
@@ -75,7 +79,7 @@ public class WorldRenderer implements Disposable {
 		}
 		batch.end();
 	}
-	
+
 	//Quand la taille de la fenêtre ou de l'écran est changée...
 	public void resize (int width, int height) {
 		/*

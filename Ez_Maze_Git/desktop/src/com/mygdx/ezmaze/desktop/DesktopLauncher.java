@@ -10,8 +10,8 @@ import com.mygdx.ezmaze.EzMazeMain;
 public class DesktopLauncher {
 	private static boolean reconstruireAtlas = false;
 	private static boolean dessineDebugLignesContour = false;
-	
-	
+
+
 	public static void main (String[] arg) {
 		if (reconstruireAtlas) {
 			Settings settings = new Settings();
@@ -28,7 +28,7 @@ public class DesktopLauncher {
 			settings.debug = dessineDebugLignesContour;
 			TexturePacker.process(settings, "assets-raw/images", "../core/assets/images","ezmaze.pack");
 		}
-		
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Ez-MA-zE";
 		config.width = 800;

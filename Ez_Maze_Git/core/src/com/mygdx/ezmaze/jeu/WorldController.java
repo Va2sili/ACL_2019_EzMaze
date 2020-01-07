@@ -1,6 +1,7 @@
 package com.mygdx.ezmaze.jeu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 
@@ -32,6 +33,7 @@ import com.mygdx.ezmaze.jeu.objects.Mur;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ETAT_COMBAT;
 import com.mygdx.ezmaze.jeu.objects.PersonnagePrincipal.ORIENTATION_PERSONNAGE;
+import com.mygdx.ezmaze.jeu.objects.projectiles.ArmeLancee;
 import com.mygdx.ezmaze.jeu.objects.projectiles.Projectile;
 
 import ezmaze.util.CameraHelper;
@@ -53,6 +55,7 @@ public class WorldController extends InputAdapter {
 
 	public Level level;
 	public Array<Projectile> projectiles;
+	public Array<ArmeLancee> armeslancees;
 	public int numLevel=0;
 	public int resurections=Constantes.RESU_INIT;
 	public int score;
@@ -62,6 +65,7 @@ public class WorldController extends InputAdapter {
 		numLevel = numLevel%(Constantes.LEVEL.length);
 		level = new Level(Constantes.LEVEL[numLevel]);
 		projectiles = new Array<Projectile>();
+		armeslancees = new Array<ArmeLancee>();
 		cameraHelper.setTarget(level.personnage);
 	}
 
@@ -92,19 +96,23 @@ public class WorldController extends InputAdapter {
 	//depuis le dernier affichage de la fenêtre...
 	public void update (float deltaTime) {
 		if(resurections>0) {
-		IaMonstre();
-		IaFantome();
-		handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
-		handleInputGame(deltaTime);
-		resurectiondupersonnage();
-		
-		//Udpdate des projectiles !
-		for (Projectile p : projectiles) {
-			p.update(deltaTime);
-		}
+			IaMonstre();
+			IaFantome();
+			handleDebugInput(deltaTime);//Il est important de prendre d'abord en compte l'action du joueur !
+			handleInputGame(deltaTime);
+			resurectiondupersonnage();
 
-		level.update(deltaTime);
-		testCollision();
+			//Udpdate des projectiles !
+			for (Projectile p : projectiles) {
+				p.update(deltaTime);
+			}
+
+			for (ArmeLancee a : armeslancees) {
+				a.update(deltaTime);
+			}
+
+			level.update(deltaTime);
+			testCollision();
 		}
 		cameraHelper.update(deltaTime);
 	}
@@ -178,7 +186,7 @@ public class WorldController extends InputAdapter {
 			else if (Gdx.input.isKeyJustPressed(Keys.F)) {
 				level.personnage.pousse = true;
 			}
-			else if (Gdx.input.isTouched()) {
+			else if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 				if (projectiles.size==0) {
 					Vector3 positionSouris = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
 					WorldRenderer.camera.unproject(positionSouris);
@@ -188,11 +196,25 @@ public class WorldController extends InputAdapter {
 					//Création du projectile
 					Projectile p = new Projectile(level.personnage.position.x+level.personnage.origin.x, level.personnage.position.y+level.personnage.origin.y, dx, dy);
 					projectiles.add(p);
+
 				}
 
-
-
 			}
+			else if(Gdx.input.isButtonPressed(Buttons.RIGHT)){
+				if (armeslancees.size==0) {
+					Vector3 positionSouris = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+					WorldRenderer.camera.unproject(positionSouris);
+					//Les directions du tir
+					float dx = (positionSouris.x-(level.personnage.position.x+level.personnage.origin.x))/(Math.abs(positionSouris.x-level.personnage.position.x+level.personnage.origin.x)+Math.abs(positionSouris.y-level.personnage.position.y+level.personnage.origin.y));
+					float dy = (positionSouris.y-(level.personnage.position.y+level.personnage.origin.y))/(Math.abs(positionSouris.x-level.personnage.position.x+level.personnage.origin.x)+Math.abs(positionSouris.y-level.personnage.position.y+level.personnage.origin.y));
+					//Création du projectile
+					ArmeLancee a = new ArmeLancee(level.personnage.position.x+level.personnage.origin.x, level.personnage.position.y+level.personnage.origin.y, dx, dy);
+					armeslancees.add(a);
+
+				}
+			}
+
+
 			else {
 				level.personnage.pousse=false;
 				level.personnage.setAttaque(false);
@@ -225,7 +247,7 @@ public class WorldController extends InputAdapter {
 
 	};
 
-	private void collisionMonstreMur(Mur mur, Monstre m) {
+	/*private void collisionMonstreMur(Mur mur, Monstre m) {
 
 
 		float differenceVerticale = m.position.y-(mur.position.y);
@@ -243,7 +265,7 @@ public class WorldController extends InputAdapter {
 		if (Math.abs(differenceHorizontale) < 1.0f)  {
 			m.position.x = m.anciennePosition.x;
 		}
-	};
+	};*/
 
 	private void collisionPersonnageEzCase(Case ezcase) {
 		//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
@@ -259,15 +281,11 @@ public class WorldController extends InputAdapter {
 		//dès qu'il arrive sur la caseboue on réduit sa vitesse pendant 3 secondes
 		level.personnage.frottement.set(100,100);
 
-		
-	
+
+
 	}
-	private void collisionPersonnageMonstre() {
-		/*
-		 * Non implémenté
-		 */
-	};
-private void collisionCaisseMur(Caisse c) {
+
+	private void collisionCaisseMur(Caisse c) {
 		PersonnagePrincipal personnage = level.personnage;
 		switch (personnage.orientation) {
 		case HAUT:
@@ -438,9 +456,19 @@ private void collisionCaisseMur(Caisse c) {
 	}
 
 	private void collisionProjectile(Projectile p) {
+
 		p.ballonCreuve = true;
 		p.vitesse.set(0,0);
 	}
+
+
+
+	private void collisionArmeLancee(ArmeLancee a) {
+		armeslancees.removeValue(a, false);
+
+	}
+
+
 	private void ramasseProjectile(Projectile p) {
 		projectiles.removeValue(p, false);
 	}
@@ -470,11 +498,14 @@ private void collisionCaisseMur(Caisse c) {
 			if (r1.overlaps(r2)) {
 				collisionPersonnageMur(mur);
 			}
-			for (Monstre m : level.monstres) {
+
+			//inutile au vu de l'IA du monstre
+			/*for (Monstre m : level.monstres) {
 				r3.set(m.position.x+0.2f,m.position.y+0.2f,m.frontiere.width-0.4f,m.frontiere.height-0.4f);
 				if (r3.overlaps(r2))
 					collisionMonstreMur(mur,m);
-			}
+			}*/
+
 			for (Projectile p : projectiles) {
 				if (!p.ballonCreuve) {
 					r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
@@ -482,6 +513,14 @@ private void collisionCaisseMur(Caisse c) {
 						collisionProjectile(p);
 					}
 				}
+			}
+
+			for (ArmeLancee a : armeslancees) {
+				r3.set(a.position.x,a.position.y,a.frontiere.width,a.frontiere.height);
+				if (r2.overlaps(r3)) {
+					collisionArmeLancee(a);
+				}
+
 			}
 
 
@@ -503,6 +542,17 @@ private void collisionCaisseMur(Caisse c) {
 				}
 			}
 
+			//Arme lancee-Caisse
+			for (ArmeLancee a : armeslancees) {
+
+				r4.set(a.position.x,a.position.y,a.frontiere.width,a.frontiere.height);
+				if (r3.overlaps(r4)) {
+					collisionArmeLancee(a);
+				}
+
+			}
+
+
 			//Caisse-Case arrivee des caisses
 			int index= 0;
 			for (ArriveeCaisse ac : level.arriveeCaisses) {
@@ -519,7 +569,7 @@ private void collisionCaisseMur(Caisse c) {
 
 
 		//Test pour les collisions personnage <--> EzCase
-		//dès qu'il y a chevauchement on fait appelle a la fonction collisionpersonnageezcase
+		//dès qu'il y a chevauchement on fait appel a la fonction collisionpersonnageezcase
 		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
 			collisionPersonnageEzCase(level.ezmaze);}
@@ -529,7 +579,7 @@ private void collisionCaisseMur(Caisse c) {
 		if(r1.overlaps(r2)) {
 			onBoue = true;
 			collisionPersonnagecaseboue(level.caseboue);
-			}
+		}
 		if(!onBoue) {
 			level.personnage.frottement.set(10,10);
 		}
@@ -556,6 +606,28 @@ private void collisionCaisseMur(Caisse c) {
 			}
 		}
 
+
+
+		for (Monstre m : level.monstres) {
+			//Test pour les collisions personnage <--> Fantome
+			r4.set(m.position.x,m.position.y,m.frontiere.width,m.frontiere.height);
+			if (r1.overlaps(r4)) {
+				level.personnage.sommePdv(-level.personnage.getPdv());
+			}
+
+			//Monstre - Arme lancee
+			for (ArmeLancee a : armeslancees) {
+				r3.set(a.position.x,a.position.y,a.frontiere.width,a.frontiere.height);
+				if (r4.overlaps(r3)) {
+					System.out.println("BAM !");
+					level.monstres.removeValue(m, false);
+					collisionArmeLancee(a);
+				}
+
+			}
+		}
+
+
 		//Collision Personnage - Ballon creuvé
 		for (Projectile p : projectiles) {
 			if (p.ballonCreuve) {
@@ -565,7 +637,6 @@ private void collisionCaisseMur(Caisse c) {
 				}
 			}
 		}
-
 	}
 	//FIN DE CONTROLE DES COLLISIONS
 
@@ -1180,12 +1251,12 @@ private void collisionCaisseMur(Caisse c) {
 	}
 
 	private void resurectiondupersonnage() {
-			if(level.personnage.getPdv()<=0) {
-				resurections=resurections-1;
-				PersonnagePrincipal.setPOINTS_DE_VIE(3);
-				keyUp(Keys.R);
-			}
-	
+		if(level.personnage.getPdv()<=0) {
+			resurections=resurections-1;
+			PersonnagePrincipal.setPOINTS_DE_VIE(3);
+			keyUp(Keys.R);
+		}
+
 	}
 
 

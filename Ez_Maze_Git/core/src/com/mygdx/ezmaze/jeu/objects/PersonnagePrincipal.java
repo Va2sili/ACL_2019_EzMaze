@@ -1,5 +1,6 @@
 package com.mygdx.ezmaze.jeu.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -78,9 +79,9 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		tempsChargeAttaque = 0f;
 		orientation = ORIENTATION_PERSONNAGE.BAS;
 		
-		pixmapAttaque = new Pixmap(2,1,Format.RGB888);
-		pixmapAttaque.setColor(1,0.6f,0,1);
-		pixmapAttaque.fill();
+		//pixmapAttaque = new Pixmap(1,1,Format.RGB888);
+		//pixmapAttaque.setColor(1,0.6f,0,1);
+		//pixmapAttaque.fill();
 	};
 
 	//Les méthodes pour définir les états du personnage
@@ -183,7 +184,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		
 		
 		
-		
+		/*
 		Texture texture = new Texture(pixmapAttaque);
 		Sprite spr = new Sprite(texture);
 		
@@ -207,7 +208,7 @@ public class PersonnagePrincipal extends AbstractGameObject {
 		
 		//On dessine la zone d'attaque
 		spr.draw(batch);
-		batch.setColor(1,1,1,1);
+		batch.setColor(1,1,1,1);*/
 		
 		//On met une couleur rouge pour le personnage lorsque son attaque est chargée
 		if (attaqueChargee) {

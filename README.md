@@ -12,11 +12,11 @@ Pour ce faire :
   
 ## Etat d'avancée du Sprint 2
  
- - [ ] Apparition de monstres qui se déplacent et font perdre le joueur
- - [ ] Attaquer les monstres
- - [ ] Système de résurrection
+ - [x] Apparition de monstres qui se déplacent et font perdre le joueur
+ - [x] Attaquer les monstres
+ - [x] Système de résurrection
  - [ ] Case de téléportation
- - [ ] Case de boue
+ - [x] Case de boue
  - [x] GUI
       
 

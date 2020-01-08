@@ -11,7 +11,7 @@ Pour ce faire :
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
 ## Commandes de jeu
-![Banniere](https://github.com/Sutcenes/EzMazeWikiSource/blob/master/Images_WIKI/commandes.png)
+![Banniere](https://github.com/Sutcenes/EzMazeWikiSource/blob/master/Images_WIKI/Commandes.png)
   
 ## Etat d'avancée du Sprint 2
  

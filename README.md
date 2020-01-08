@@ -10,6 +10,9 @@ Pour ce faire :
   5. On y trouve un fichier .jar dont le nom est de la forme : "_EzMaze-sprint.1-build-200641_29112019_" ([cf. le wiki EzMaze](https://github.com/Va2sili/ACL_2019_EzMaze/wiki/GRADLE#libgdx---outils-de-build))
   6. On peut le lancer (manuellement ou via la commande _java -jar nomdubuild.jar_).
   
+## Commandes de jeu
+![Banniere](https://github.com/Sutcenes/EzMazeWikiSource/blob/master/Images_WIKI/commandes.png)
+  
 ## Etat d'avancée du Sprint 2
  
  - [x] Apparition de monstres qui se déplacent et font perdre le joueur
@@ -17,8 +20,7 @@ Pour ce faire :
  - [x] Système de résurrection
  - [ ] Case de téléportation
  - [x] Case de boue
- - [x] GUI
-      
+ - [x] GUI      
 
 ## Informations Supplémentaires
 On peut retrouver le dépôt GIT concernant les images utilisées dans le WIKI à l'adresse : https://github.com/Sutcenes/EzMazeWikiSource

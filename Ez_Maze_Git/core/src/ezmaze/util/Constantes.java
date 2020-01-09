@@ -7,12 +7,12 @@ public class Constantes {
 	 * un fichier *de paramètres qui éviterait d'avoir à recompiler tout le code 
 	 * à chaque modification *de ces constantes. Mais on ne le fait pas.
 	 */
-	
+
 	//On aura une carte dont on ne verra pas l'entièreté.
 	//On défini la partie visible de la carte (la taille de la vue : un carré de 5 par 5)
 	public static final float VIEWPORT_WIDTH = 5.0f;
 	public static final float VIEWPORT_HEIGHT = 5.0f;
-	
+
 	//Emplacement pour le fichier de description de l'atlas de texture
 	public static final String TEXTURE_ATLAS_OBJECTS = "../core/assets/images/ezmaze.pack.atlas";
 
@@ -24,7 +24,7 @@ public class Constantes {
 	//Il est à la taille de la fenêtre
 	public static final float VIEWPORT_GUI_WIDTH = 5.0f;
 	public static final float VIEWPORT_GUI_HEIGHT = 5.0f;
-	
+
 	//NOMBRE DE RESURECTIONS INITIALES
 	public static final int RESU_INIT = 4;
 }

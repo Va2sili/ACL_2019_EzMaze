@@ -67,6 +67,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		CaseBoue=new AssetCaseBoue(atlas);
 		caisse = new AssetCaisse(atlas);
 		projectile = new AssetProjectile(atlas);
+		armelancee = new AssetArmeLancee(atlas);
 		caseTP=new AssetCaseTP(atlas);
 		police = new AssetPoliceEcriture();
 

@@ -26,7 +26,9 @@ public class Level {
 		SPAWN_MONSTRE(255,242,0),//Du jaune
 		CAISSE(255,0,255),//Du magenta
 		CASE_BOUE(211,211,211),//lightgray
-		PLACE_CAISSE(0,255,255);//Du cyan
+		PLACE_CAISSE(0,255,255),//Du cyan
+		CASE_TP(160,80,160),//Du violet
+		CASE_TPOUT(160,0,160);
 
 		private int color;
 
@@ -52,9 +54,11 @@ public class Level {
 	public Array<Monstre> monstres;
 	public Array<Fantome> fantomes;
     public Case ezmaze;
-    public Case caseboue;
+    public Array<Case> caseboues;
     public Array<Caisse> caisses;
     public Array<ArriveeCaisse> arriveeCaisses;
+    public Array<Case> casetps;
+    public Array<Case> casetpouts;
 
 	public Level(String filename) {
 		init(filename);
@@ -66,7 +70,9 @@ public class Level {
 		//objets
 		murs =  new Array<Mur>();
         ezmaze=null;
-        caseboue=null;
+        caseboues=new Array<Case>();
+        casetps=new Array<Case>();
+        casetpouts=new Array<Case>();
 		//monstres
 		monstres= new Array<Monstre>();
 		fantomes = new Array<Fantome>();
@@ -128,9 +134,19 @@ public class Level {
 				else if (BLOCK_TYPE.CASE_BOUE.sameColor(pixelObserve)) {
 					obj=new Case();
 					obj.position.set(pixelX, -pixelY);
-					caseboue = (Case) obj;
+					caseboues.add((Case) obj);
 				}
 
+				else if (BLOCK_TYPE.CASE_TP.sameColor(pixelObserve)) {
+					obj=new Case();
+					obj.position.set(pixelX, -pixelY);
+					casetps.add((Case) obj);
+				}
+				else if (BLOCK_TYPE.CASE_TPOUT.sameColor(pixelObserve)) {
+					obj=new Case();
+					obj.position.set(pixelX, -pixelY);
+					casetpouts.add((Case) obj);
+				}
 				//Soit c'est le spawn monstre
 				else if (BLOCK_TYPE.SPAWN_MONSTRE.sameColor(pixelObserve)) {
 					obj = new Monstre();
@@ -194,18 +210,23 @@ public class Level {
 		}
 		//on dessine la case d'arrivée
 		ezmaze.render(batch);
-		caseboue.render1(batch);
-		//Dessiner le personnage joueur
-
 		
-		for (Monstre m : monstres) {
-			m.render(batch);
+		
+		for (Case c : caseboues) {
+			c.render1(batch);
 		}
+		for (Case c : casetps) {
+			c.render2(batch);
+		}
+		
 		for (Caisse c : caisses) {
 			c.render(batch);
 		}
 		for (ArriveeCaisse ac : arriveeCaisses) {
 			ac.render(batch);
+		}
+		for (Monstre m : monstres) {
+			m.render(batch);
 		}
 		for (Fantome f : fantomes) {
 			f.render(batch);
@@ -217,7 +238,12 @@ public class Level {
 	public void update(float deltaTime) {
 		personnage.update(deltaTime);
 		ezmaze.update(deltaTime);
-		caseboue.update(deltaTime);
+		for (Case c : caseboues) {
+			c.update(deltaTime);
+		}
+		for (Case c : casetps) {
+			c.update(deltaTime);
+		}
 		for (Monstre m : monstres) {
 			m.update(deltaTime);
 		}

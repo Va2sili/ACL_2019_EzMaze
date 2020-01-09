@@ -455,6 +455,13 @@ public class WorldController extends InputAdapter {
 		}
 	}
 
+	private void collisionPersonnageCaseTP(Case casetp, Case ezcase) {
+		PersonnagePrincipal personnage = level.personnage;
+		personnage.position.x=ezcase.position.x;
+		personnage.position.y=ezcase.position.y;
+
+	}
+
 	private void collisionProjectile(Projectile p) {
 
 		p.ballonCreuve = true;
@@ -573,17 +580,27 @@ public class WorldController extends InputAdapter {
 		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
 		if(r1.overlaps(r2)) {
 			collisionPersonnageEzCase(level.ezmaze);}
+
 		//test collision personnage case boue
-		r2.set(level.caseboue.position.x,level.caseboue.position.y,level.caseboue.frontiere.width,level.caseboue.frontiere.height);
 		boolean onBoue = false;
-		if(r1.overlaps(r2)) {
-			onBoue = true;
-			collisionPersonnagecaseboue(level.caseboue);
+		for(Case caseboue : level.caseboues) {
+			r2.set(caseboue.position.x,caseboue.position.y,caseboue.frontiere.width,caseboue.frontiere.height);
+			if(r1.overlaps(r2)) {
+				onBoue = true;
+				collisionPersonnagecaseboue(caseboue);
+			}
 		}
 		if(!onBoue) {
 			level.personnage.frottement.set(10,10);
 		}
-
+		int i=0;
+		for(Case casetp : level.casetps) {
+			r3.set(casetp.position.x,casetp.position.y,casetp.frontiere.width,casetp.frontiere.height);
+			if(r1.overlaps(r3)) {
+				collisionPersonnageCaseTP(casetp, level.casetpouts.get(i));
+			}
+			i++;
+		}
 		//Test pour les collisions personnage <--> Monstre
 
 

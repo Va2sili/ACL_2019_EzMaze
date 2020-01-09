@@ -30,6 +30,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetCaisse caisse;
 	public AssetProjectile projectile;
 	public AssetArmeLancee armelancee;
+	public AssetCaseTP caseTP;
 
 
 
@@ -66,7 +67,7 @@ public class Assets implements Disposable, AssetErrorListener {
 		CaseBoue=new AssetCaseBoue(atlas);
 		caisse = new AssetCaisse(atlas);
 		projectile = new AssetProjectile(atlas);
-		armelancee = new AssetArmeLancee(atlas);
+		caseTP=new AssetCaseTP(atlas);
 		police = new AssetPoliceEcriture();
 
 	}
@@ -142,6 +143,12 @@ public class Assets implements Disposable, AssetErrorListener {
 		public final AtlasRegion boue;
 		public AssetCaseBoue(TextureAtlas atlas) {
 			boue=atlas.findRegion("boue");
+		}
+	}
+	public class AssetCaseTP{
+		public final AtlasRegion tp;
+		public AssetCaseTP(TextureAtlas atlas) {
+			tp=atlas.findRegion("tp");
 		}
 	}
 	public class AssetPoliceEcriture{

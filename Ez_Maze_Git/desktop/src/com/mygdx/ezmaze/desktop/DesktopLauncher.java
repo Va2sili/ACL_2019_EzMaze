@@ -8,7 +8,7 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.mygdx.ezmaze.EzMazeMain;
 
 public class DesktopLauncher {
-	private static boolean reconstruireAtlas = true;
+	private static boolean reconstruireAtlas = false;
 	private static boolean dessineDebugLignesContour = false;
 
 

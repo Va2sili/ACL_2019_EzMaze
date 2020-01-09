@@ -18,7 +18,7 @@ Pour ce faire :
  - [x] Apparition de monstres qui se déplacent et font perdre le joueur
  - [x] Attaquer les monstres
  - [x] Système de résurrection
- - [ ] Case de téléportation
+ - [x] Case de téléportation
  - [x] Case de boue
  - [x] GUI      
 

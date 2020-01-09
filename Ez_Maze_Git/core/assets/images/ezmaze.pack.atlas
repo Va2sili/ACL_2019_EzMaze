@@ -39,6 +39,13 @@ boue
   orig: 32, 31
   offset: 0, 0
   index: -1
+caseTP
+  rotate: false
+  xy: 846, 557
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
 ghost
   rotate: false
   xy: 948, 796

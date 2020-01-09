@@ -148,7 +148,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	public class AssetCaseTP{
 		public final AtlasRegion tp;
 		public AssetCaseTP(TextureAtlas atlas) {
-			tp=atlas.findRegion("tp");
+			tp=atlas.findRegion("caseTP");
 		}
 	}
 	public class AssetPoliceEcriture{

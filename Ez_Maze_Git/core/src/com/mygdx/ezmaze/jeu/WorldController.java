@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.utils.Array;
-
+import com.mygdx.ezmaze.fenetres.FenetreMenu;
 import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse.ETAT_CAISSE;
@@ -59,6 +60,12 @@ public class WorldController extends InputAdapter {
 	public int numLevel=0;
 	public int resurections=Constantes.RESU_INIT;
 	public int score;
+	
+	private Game jeu;
+	private void retourMenu() {
+		//retour au Menu d'accueil
+		jeu.setScreen(new FenetreMenu(jeu));
+	}
 
 	private void initLevel() {
 		score = 0;
@@ -69,7 +76,8 @@ public class WorldController extends InputAdapter {
 		cameraHelper.setTarget(level.personnage);
 	}
 
-	public WorldController() {
+	public WorldController(Game jeu) {
+		this.jeu = jeu;
 		init();
 	}
 
@@ -1263,6 +1271,9 @@ public class WorldController extends InputAdapter {
 		else if (keycode == Keys.ENTER) {
 			cameraHelper.setTarget(cameraHelper.hasTarget()? null:level.personnage);
 			Gdx.app.debug(TAG,"On suit avec la caméra : "+cameraHelper.hasTarget());
+		}
+		else if (keycode == Keys.ESCAPE) {
+			retourMenu();
 		}
 		return false;
 	}

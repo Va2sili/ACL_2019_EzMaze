@@ -14,7 +14,7 @@ public class Constantes {
 	public static final float VIEWPORT_HEIGHT = 5.0f;
 
 	//Emplacement pour le fichier de description de l'atlas de texture
-	public static final String TEXTURE_ATLAS_OBJECTS = "images/ezmaze.pack.atlas";
+	public static final String TEXTURE_ATLAS_OBJECTS = "../core/assets/images/ezmaze.pack.atlas";
 
 	//Emplacement du fichier image pour le level_01
 	private static String chemin = "../core/assets/levels/";

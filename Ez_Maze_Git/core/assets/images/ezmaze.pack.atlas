@@ -82,9 +82,23 @@ BallonDeBasket
   index: -1
 Heart
   rotate: false
-  xy: 604, 671
+  xy: 604, 356
   size: 250, 250
   orig: 250, 250
+  offset: 0, 0
+  index: -1
+SSAD_0001_by_shiroikuro
+  rotate: false
+  xy: 604, 608
+  size: 314, 313
+  orig: 314, 313
+  offset: 0, 0
+  index: -1
+Zombie
+  rotate: false
+  xy: 321, 14
+  size: 197, 305
+  orig: 197, 305
   offset: 0, 0
   index: -1
 victoire

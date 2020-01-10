@@ -24,8 +24,8 @@ public class Case extends AbstractGameObject {
 	private void init() {
 		dimension.set(1,1);
 		CaseArrivee = Assets.instance.carre.EZCase;
-		CaseBoue=Assets.instance.CaseBoue.boue;
-		CaseTP=Assets.instance.caseTP.tp;
+		CaseBoue=Assets.instance.carre.boue;
+		CaseTP=Assets.instance.carre.tp;
 
 		//Début de la longueur
 		setLength(1);

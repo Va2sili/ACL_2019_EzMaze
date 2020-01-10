@@ -40,7 +40,8 @@ public class Fantome extends AbstractGameObject {
 	}
 
 	public void init(float x, float y) {
-		dimension.set(0.9f,0.9f);
+		position.set(x,y);
+		dimension.set(0.5f,0.5f);
 		regFantome = Assets.instance.monstre.fantome;
 	
 		
@@ -49,8 +50,8 @@ public class Fantome extends AbstractGameObject {
 		//Paramétrage des frontières
 		frontiere.set(0,0,dimension.x,dimension.y);
 		//Valeurs de mobilite
-		vitesseMax.set(3f,3f);
-		frottement.set(100,100);
+		vitesseMax.set(0.5f,0.5f);
+		frottement.set(1,1);
 		/*
 		 * On donne une grande valeur aux frottements pour éviter toute glissade
 		 * incontrôlée...

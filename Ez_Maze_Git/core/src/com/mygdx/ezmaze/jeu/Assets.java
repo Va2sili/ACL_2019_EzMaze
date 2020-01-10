@@ -25,12 +25,10 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetMur mur;
 	public AssetCase carre;//On ne peut pas utiliser le nom 'case'
 	public AssetMonstre monstre;
-	public AssetCaseBoue CaseBoue;
 	public AssetPoliceEcriture police;
 	public AssetCaisse caisse;
 	public AssetProjectile projectile;
 	public AssetArmeLancee armelancee;
-	public AssetCaseTP caseTP;
 
 
 
@@ -64,11 +62,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		mur = new AssetMur(atlas);
 		carre = new AssetCase(atlas);
 		monstre =new AssetMonstre(atlas);
-		CaseBoue=new AssetCaseBoue(atlas);
 		caisse = new AssetCaisse(atlas);
 		projectile = new AssetProjectile(atlas);
 		armelancee = new AssetArmeLancee(atlas);
-		caseTP=new AssetCaseTP(atlas);
 		police = new AssetPoliceEcriture();
 
 	}
@@ -126,32 +122,29 @@ public class Assets implements Disposable, AssetErrorListener {
 	public class AssetCase{
 		public final AtlasRegion EZCase;
 		public final AtlasRegion arriveeCaisse;
+		public final AtlasRegion boue;
+		public final AtlasRegion tp;
 		public AssetCase(TextureAtlas atlas) {
 			EZCase = atlas.findRegion("victoire");
 			arriveeCaisse = atlas.findRegion("PlaceArrivee");
+			boue=atlas.findRegion("boue");
+			tp=atlas.findRegion("caseTP");
 		}
 	}
 
 	public class AssetMonstre{
 		public final AtlasRegion monster;
 		public final AtlasRegion fantome;
+		public final AtlasRegion chercheur;
+		public final AtlasRegion zombie;
 		public AssetMonstre(TextureAtlas atlas) {
 			monster = atlas.findRegion("monstre");
 			fantome = atlas.findRegion("ghost");
+			chercheur = atlas.findRegion("SSAD_0001_by_shiroikuro");
+			zombie = atlas.findRegion("Zombie");
 		}
 	}
-	public class AssetCaseBoue{
-		public final AtlasRegion boue;
-		public AssetCaseBoue(TextureAtlas atlas) {
-			boue=atlas.findRegion("boue");
-		}
-	}
-	public class AssetCaseTP{
-		public final AtlasRegion tp;
-		public AssetCaseTP(TextureAtlas atlas) {
-			tp=atlas.findRegion("caseTP");
-		}
-	}
+	
 	public class AssetPoliceEcriture{
 		public final BitmapFont petit;
 		public final BitmapFont moyen;

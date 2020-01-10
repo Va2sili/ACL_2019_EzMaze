@@ -8,6 +8,7 @@ import com.mygdx.ezmaze.jeu.objects.AbstractGameObject;
 import com.mygdx.ezmaze.jeu.objects.ArriveeCaisse;
 import com.mygdx.ezmaze.jeu.objects.Caisse;
 import com.mygdx.ezmaze.jeu.objects.Case;
+import com.mygdx.ezmaze.jeu.objects.Chercheur;
 import com.mygdx.ezmaze.jeu.objects.Fantome;
 import com.mygdx.ezmaze.jeu.objects.Monstre;
 import com.mygdx.ezmaze.jeu.objects.Mur;
@@ -28,7 +29,9 @@ public class Level {
 		CASE_BOUE(211,211,211),//lightgray
 		PLACE_CAISSE(0,255,255),//Du cyan
 		CASE_TP(160,80,160),//Du violet
-		CASE_TPOUT(160,0,160);
+		CASE_TPOUT(160,0,160),//Du violet aussi
+		SPAWN_CHERCHEUR(23,14,7),//Du marron
+		SPAWN_ZOMBIE(130,190,180);//Du bleute
 
 		private int color;
 
@@ -53,12 +56,14 @@ public class Level {
 	public PersonnagePrincipal personnage;
 	public Array<Monstre> monstres;
 	public Array<Fantome> fantomes;
+	public Array<Chercheur> chercheurs;
     public Case ezmaze;
     public Array<Case> caseboues;
     public Array<Caisse> caisses;
     public Array<ArriveeCaisse> arriveeCaisses;
     public Array<Case> casetps;
     public Array<Case> casetpouts;
+	
 
 	public Level(String filename) {
 		init(filename);
@@ -76,6 +81,7 @@ public class Level {
 		//monstres
 		monstres= new Array<Monstre>();
 		fantomes = new Array<Fantome>();
+		chercheurs = new Array<Chercheur>();
 		caisses = new Array<Caisse>();
 		arriveeCaisses = new Array<ArriveeCaisse>();
 
@@ -154,6 +160,18 @@ public class Level {
 					monstres.add((Monstre)obj);
 					
 				}
+				else if (BLOCK_TYPE.SPAWN_CHERCHEUR.sameColor(pixelObserve)) {
+					obj = new Chercheur(0);
+					obj.position.set(pixelX,-pixelY);
+					chercheurs.add((Chercheur)obj);
+					
+				}
+				else if (BLOCK_TYPE.SPAWN_ZOMBIE.sameColor(pixelObserve)) {
+					obj = new Chercheur(1);
+					obj.position.set(pixelX,-pixelY);
+					chercheurs.add((Chercheur)obj);
+					
+				}
 				else if (BLOCK_TYPE.CAISSE.sameColor(pixelObserve)) {
 					obj = new Caisse();
 					obj.position.set(pixelX,-pixelY);
@@ -168,7 +186,6 @@ public class Level {
 				}
 				else if (BLOCK_TYPE.SPAWN_FANTOME.sameColor(pixelObserve)) {
 					obj = new Fantome(pixelX,-pixelY);
-					obj.position.set(pixelX,-pixelY);
 					fantomes.add((Fantome)obj);
 					
 				}
@@ -228,6 +245,10 @@ public class Level {
 		for (Monstre m : monstres) {
 			m.render(batch);
 		}
+		for (Chercheur c : chercheurs) {
+			c.render(batch);
+		}
+		
 		for (Fantome f : fantomes) {
 			f.render(batch);
 		}
@@ -259,5 +280,9 @@ public class Level {
 		for (Fantome f : fantomes) {
 			f.update(deltaTime);
 		}
+		for (Chercheur c : chercheurs) {
+			c.update(deltaTime);
+		}
+		
 	}
 }

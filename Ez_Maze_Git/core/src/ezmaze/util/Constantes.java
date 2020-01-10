@@ -18,7 +18,7 @@ public class Constantes {
 
 	//Emplacement du fichier image pour le level_01
 	private static String chemin = "../core/assets/levels/";
-	public static final String[] LEVEL = {chemin+"level_tp.png",chemin+"level_fantome.png",chemin+"level_monstre.png",chemin+"level_01.png",chemin+"level_02.png",chemin+"level_03.png",chemin+"level_04.png",chemin+"level_05.png",chemin+"level_06.png",chemin+"level_07.png",chemin+"level_08.png"};
+	public static final String[] LEVEL = {chemin+"level_MonstreFantome.png",chemin+"level_tp.png",chemin+"level_fantome.png",chemin+"level_monstre.png",chemin+"level_01.png",chemin+"level_02.png",chemin+"level_03.png",chemin+"level_04.png",chemin+"level_05.png",chemin+"level_06.png",chemin+"level_07.png",chemin+"level_08.png"};
 
 	//Mise en place d'un GUI
 	//Il est à la taille de la fenêtre

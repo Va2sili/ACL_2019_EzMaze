@@ -30,7 +30,7 @@ public class Fantome extends AbstractGameObject {
 		RECHERCHE,RETOUR;
 	}
 	
-	
+	public float tempsRetour;
 	public ETAT_COMBAT etatCombat;
 	
 	
@@ -65,6 +65,7 @@ public class Fantome extends AbstractGameObject {
 		//Mise à jour des attributs d'état du personnage
 		spawn = new Vector2(x,y);
 		etatCombat = ETAT_COMBAT.RECHERCHE;
+		tempsRetour=0;
 		orientation = ORIENTATION_FANTOME.BAS;
 
 	};
@@ -76,7 +77,23 @@ public class Fantome extends AbstractGameObject {
 
 	@Override
 	public void update(float deltaTime) {
-		super.update(deltaTime);
+		switch (etatCombat) {
+		case RECHERCHE:
+			super.update(deltaTime);
+			break;
+
+		case RETOUR:
+			if (tempsRetour<3) {
+				tempsRetour += deltaTime;
+			}
+			else {
+				tempsRetour=0;
+				etatCombat=ETAT_COMBAT.RECHERCHE;
+			}
+				
+			break;
+		}
+		
 		
 	}
 
@@ -102,7 +119,16 @@ public class Fantome extends AbstractGameObject {
 
 		//On dessine le fantome
 		reg = regFantome;
-		batch.setColor(1,1,1,0.5f);//Ajout d'une transparence !
+		switch (etatCombat) {
+		case RETOUR:
+			batch.setColor(0.5f,0.5f,1,0.5f);//Ajout d'une transparence !
+			break;
+
+		case RECHERCHE:
+			batch.setColor(1,1,1,0.5f);//Ajout d'une transparence !
+			break;
+		}
+		
 		batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);
 		//Dans le cas où on aurrait modifié la couleur du batch, on la réinitialise (blanc)
 		batch.setColor(1,1,1,1);

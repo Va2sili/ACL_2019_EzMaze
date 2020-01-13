@@ -617,19 +617,21 @@ public class WorldController extends InputAdapter {
 
 
 		for (Fantome f : level.fantomes) {
-			//Test pour les collisions personnage <--> Fantome
-			r4.set(f.position.x,f.position.y,f.frontiere.width,f.frontiere.height);
-			if (r1.overlaps(r4)) {
-				level.personnage.sommePdv(-f.DEGATS_ATTAQUE);
-			}
-			//Fantome - Ballon
-			for (Projectile p : projectiles) {
-				if (!p.ballonCreuve) {
-					r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
-					if (r4.overlaps(r3)) {
-						System.out.println("PLOP !");
-						f.position.set(f.spawn.x,f.spawn.y);
-						collisionProjectile(p);
+			if(f.etatCombat==Fantome.ETAT_COMBAT.RECHERCHE) {
+				//Test pour les collisions personnage <--> Fantome
+				r4.set(f.position.x,f.position.y,f.frontiere.width,f.frontiere.height);
+				if (r1.overlaps(r4)) {
+					level.personnage.sommePdv(-f.DEGATS_ATTAQUE);
+				}
+				//Fantome - Ballon
+				for (Projectile p : projectiles) {
+					if (!p.ballonCreuve) {
+						r3.set(p.position.x,p.position.y,p.frontiere.width,p.frontiere.height);
+						if (r4.overlaps(r3)) {
+							f.position.set(f.spawn.x,f.spawn.y);
+							f.etatCombat=Fantome.ETAT_COMBAT.RETOUR;
+							collisionProjectile(p);
+						}
 					}
 				}
 			}
@@ -648,14 +650,13 @@ public class WorldController extends InputAdapter {
 			for (ArmeLancee a : armeslancees) {
 				r3.set(a.position.x,a.position.y,a.frontiere.width,a.frontiere.height);
 				if (r4.overlaps(r3)) {
-					System.out.println("BAM !");
 					level.monstres.removeValue(m, false);
 					collisionArmeLancee(a);
 				}
 
 			}
 		}
-		
+
 		for (Chercheur m : level.chercheurs) {
 			//Test pour les collisions personnage <--> zombie
 			r4.set(m.position.x,m.position.y,m.frontiere.width,m.frontiere.height);
@@ -668,11 +669,13 @@ public class WorldController extends InputAdapter {
 				for (ArmeLancee a : armeslancees) {
 					r3.set(a.position.x,a.position.y,a.frontiere.width,a.frontiere.height);
 					if (r4.overlaps(r3)) {
-						level.fantomes.add(new Fantome((int)m.position.x,(int)m.position.y));
+						Fantome f = new Fantome((int)m.position.x,(int)m.position.y);
+						f.etatCombat=Fantome.ETAT_COMBAT.RETOUR;
+						level.fantomes.add(f);
 						level.chercheurs.removeValue(m, false);
 						collisionArmeLancee(a);
 					}
-	
+
 				}
 			}
 		}

@@ -1,5 +1,9 @@
 package com.mygdx.ezmaze.jeu;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,13 +61,14 @@ public class Level {
 	public Array<Monstre> monstres;
 	public Array<Fantome> fantomes;
 	public Array<Chercheur> chercheurs;
-    public Case ezmaze;
-    public Array<Case> caseboues;
-    public Array<Caisse> caisses;
-    public Array<ArriveeCaisse> arriveeCaisses;
-    public Array<Case> casetps;
-    public Array<Case> casetpouts;
-	
+	public Case ezmaze;
+	public Array<Case> caseboues;
+	public Array<Caisse> caisses;
+	public Array<ArriveeCaisse> arriveeCaisses;
+	public Array<Case> casetps;
+	public Array<Case> casetpouts;
+	public Array<Integer> casetpparam;
+
 
 	public Level(String filename) {
 		init(filename);
@@ -74,10 +79,11 @@ public class Level {
 		personnage = null;
 		//objets
 		murs =  new Array<Mur>();
-        ezmaze=null;
-        caseboues=new Array<Case>();
-        casetps=new Array<Case>();
-        casetpouts=new Array<Case>();
+		ezmaze=null;
+		caseboues=new Array<Case>();
+		casetps=new Array<Case>();
+		casetpouts=new Array<Case>();
+		casetpparam =new Array<Integer>();
 		//monstres
 		monstres= new Array<Monstre>();
 		fantomes = new Array<Fantome>();
@@ -86,6 +92,21 @@ public class Level {
 		arriveeCaisses = new Array<ArriveeCaisse>();
 
 		//Chargement du fichier PNG de représentation du level
+
+		//On charge les infos de case TP
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename+".caseTP.txt"));
+			String line;
+			while ((line = br.readLine()) != null) {
+				casetpparam.add(Integer.valueOf(line));
+			}
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
 
 		//On analyse les pixels de haut-gauche à bas-droit
@@ -158,36 +179,36 @@ public class Level {
 					obj = new Monstre();
 					obj.position.set(pixelX,-pixelY);
 					monstres.add((Monstre)obj);
-					
+
 				}
 				else if (BLOCK_TYPE.SPAWN_CHERCHEUR.sameColor(pixelObserve)) {
 					obj = new Chercheur(0);
 					obj.position.set(pixelX,-pixelY);
 					chercheurs.add((Chercheur)obj);
-					
+
 				}
 				else if (BLOCK_TYPE.SPAWN_ZOMBIE.sameColor(pixelObserve)) {
 					obj = new Chercheur(1);
 					obj.position.set(pixelX,-pixelY);
 					chercheurs.add((Chercheur)obj);
-					
+
 				}
 				else if (BLOCK_TYPE.CAISSE.sameColor(pixelObserve)) {
 					obj = new Caisse();
 					obj.position.set(pixelX,-pixelY);
 					caisses.add((Caisse)obj);
-					
+
 				}
 				else if (BLOCK_TYPE.PLACE_CAISSE.sameColor(pixelObserve)) {
 					obj = new ArriveeCaisse();
 					obj.position.set(pixelX,-pixelY);
 					arriveeCaisses.add((ArriveeCaisse)obj);
-					
+
 				}
 				else if (BLOCK_TYPE.SPAWN_FANTOME.sameColor(pixelObserve)) {
 					obj = new Fantome(pixelX,-pixelY);
 					fantomes.add((Fantome)obj);
-					
+
 				}
 
 				//Sinon c'est un objet inconnu
@@ -227,15 +248,15 @@ public class Level {
 		}
 		//on dessine la case d'arrivée
 		ezmaze.render(batch);
-		
-		
+
+
 		for (Case c : caseboues) {
 			c.render1(batch);
 		}
 		for (Case c : casetps) {
 			c.render2(batch);
 		}
-		
+
 		for (Caisse c : caisses) {
 			c.render(batch);
 		}
@@ -248,7 +269,7 @@ public class Level {
 		for (Chercheur c : chercheurs) {
 			c.render(batch);
 		}
-		
+
 		for (Fantome f : fantomes) {
 			f.render(batch);
 		}
@@ -283,6 +304,6 @@ public class Level {
 		for (Chercheur c : chercheurs) {
 			c.update(deltaTime);
 		}
-		
+
 	}
 }

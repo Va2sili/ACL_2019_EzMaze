@@ -34,7 +34,7 @@ public class Level {
 		PLACE_CAISSE(0,255,255),//Du cyan
 		CASE_TP(160,80,160),//Du violet
 		CASE_TPOUT(160,0,160),//Du violet aussi
-		SPAWN_CHERCHEUR(23,14,7),//Du marron
+		SPAWN_CHERCHEUR(70,40,13),//Du marron
 		SPAWN_ZOMBIE(130,190,180);//Du bleute
 
 		private int color;

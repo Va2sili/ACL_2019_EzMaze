@@ -76,11 +76,13 @@ public class Case extends AbstractGameObject {
 		float relY = 0;
 
 		reg=CaseTP;// Dessin pour la case TP
+		
 		for (int i = 0; i < length; i++) {
 			batch.draw(reg.getTexture(), position.x+relX, position.y+relY, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);
 			relX+=dimension.x;
 
 		}
+		
 	}	
 
 

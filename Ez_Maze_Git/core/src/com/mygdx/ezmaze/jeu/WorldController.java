@@ -282,12 +282,8 @@ public class WorldController extends InputAdapter {
 	private void collisionPersonnageEzCase(Case ezcase) {
 		//dès qu'il arrive sur la case d'arrivée on le renvoit sur la case de départ
 		PersonnagePrincipal personnage = level.personnage;
-		float differenceH = personnage.position.x-(ezcase.position.x);
-		if (Math.abs(differenceH)<1.0f && level.arriveeCaisses.size==0)  {
-			numLevel++;;
-			keyUp(Keys.R);
-
-		}
+		numLevel++;;
+		keyUp(Keys.R);
 	}
 	private void collisionPersonnagecaseboue(Case caseboue) {
 		//dès qu'il arrive sur la caseboue on réduit sa vitesse pendant 3 secondes
@@ -589,10 +585,11 @@ public class WorldController extends InputAdapter {
 
 		//Test pour les collisions personnage <--> EzCase
 		//dès qu'il y a chevauchement on fait appel a la fonction collisionpersonnageezcase
-		r2.set(level.ezmaze.position.x,level.ezmaze.position.y,level.ezmaze.frontiere.width,level.ezmaze.frontiere.height);
+		if (level.arriveeCaisses.isEmpty()) {
+		r2.set(level.ezmaze.position.x+0.2f,level.ezmaze.position.y+0.2f,level.ezmaze.frontiere.width-0.4f,level.ezmaze.frontiere.height-0.4f);
 		if(r1.overlaps(r2)) {
 			collisionPersonnageEzCase(level.ezmaze);}
-
+		}
 		//test collision personnage case boue
 		boolean onBoue = false;
 		for(Case caseboue : level.caseboues) {

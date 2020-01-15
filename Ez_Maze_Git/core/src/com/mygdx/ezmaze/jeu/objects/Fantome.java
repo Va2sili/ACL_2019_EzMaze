@@ -121,7 +121,7 @@ public class Fantome extends AbstractGameObject {
 		reg = regFantome;
 		switch (etatCombat) {
 		case RETOUR:
-			batch.setColor(0.5f,0.5f,1,0.5f);//Ajout d'une transparence !
+			batch.setColor(1f,0.5f,0.5f,1f);//Ajout d'une transparence !
 			break;
 
 		case RECHERCHE:

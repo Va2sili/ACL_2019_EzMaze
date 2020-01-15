@@ -1497,7 +1497,7 @@ public class WorldController extends InputAdapter {
 
 
 	public int getNbMonstres() {
-		int n = level.monstres.size;
+		int n = level.monstres.size+level.chercheurs.size+level.fantomes.size;
 		return n;
 	}
 

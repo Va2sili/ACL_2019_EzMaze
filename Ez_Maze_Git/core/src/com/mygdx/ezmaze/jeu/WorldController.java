@@ -607,7 +607,7 @@ public class WorldController extends InputAdapter {
 		}
 		int i=0;
 		for(Case casetp : level.casetps) {
-			r3.set(casetp.position.x,casetp.position.y,casetp.frontiere.width,casetp.frontiere.height);
+			r3.set(casetp.position.x+0.2f,casetp.position.y+0.2f,casetp.frontiere.width-0.4f,casetp.frontiere.height-0.4f);
 			if(r1.overlaps(r3)) {
 				collisionPersonnageCaseTP(casetp, level.casetpouts.get(level.casetpparam.get(i)));
 			}

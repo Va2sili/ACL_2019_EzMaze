@@ -1,10 +1,16 @@
 package com.mygdx.ezmaze.jeu;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.print.DocFlavor.URL;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -92,20 +98,19 @@ public class Level {
 		arriveeCaisses = new Array<ArriveeCaisse>();
 
 		//Chargement du fichier PNG de représentation du level
-
-		//On charge les infos de case TP
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(filename+".caseTP.txt"));
-			String line;
-			while ((line = br.readLine()) != null) {
-				casetpparam.add(Integer.valueOf(line));
+			FileHandle handle = Gdx.files.internal(filename+".caseTP.txt");
+			String text = handle.readString();
+			String wordsArray[] = text.split("\\r?\\n");
+			for(String word : wordsArray) {
+				casetpparam.add(Integer.valueOf(word));
 			}
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
+		catch (Exception e){
+
+		}
+
+
 
 		Pixmap pixmap = new Pixmap(Gdx.files.internal(filename));
 
